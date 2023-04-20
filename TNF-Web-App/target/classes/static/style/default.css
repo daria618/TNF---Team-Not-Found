@@ -1,6 +1,6 @@
 body {
     background-color: #171A1A;
-    background-image: url("../img/Rectangle_1.png");
+    background-image: url("../img/starter_bg.png");
     background-repeat: no-repeat;
     -moz-background-size: 100%; /* Firefox 3.6+ */
     -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
@@ -191,7 +191,7 @@ input[type=email], input[type=password] {
     display: none;
 
     padding: 15px;
-    background: rgba(32, 35, 40, 0.75);
+    background: rgba(32, 35, 40, 0.95);
     border-radius: 10px;
 
     position: absolute;

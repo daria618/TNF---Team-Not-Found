@@ -8,8 +8,9 @@ import java.util.Map;
 @Controller
 public class DefaultController {
 
-    @GetMapping("/dev")
-    public String greeting(Map<String, Object> model) {
+    @GetMapping("/index")
+    public String def(Map<String, Object> model) {
+        System.out.println("TESTOUT");
         return "index";
     }
 
