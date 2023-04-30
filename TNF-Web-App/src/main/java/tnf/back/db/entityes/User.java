@@ -19,7 +19,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    boolean enabled;
+    boolean active;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -28,11 +28,11 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String email, boolean enabled, Set<Role> roles) {
+    public User(String username, String password, String email, boolean active, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.enabled = enabled;
+        this.active = active;
         this.roles = roles;
     }
 }
