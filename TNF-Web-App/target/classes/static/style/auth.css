@@ -1,0 +1,111 @@
+input[type=email], input[type=password], input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:white;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:white;
+    opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:white;
+    opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:white;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color:white;
+}
+::placeholder { /* Most modern browsers support this now. */
+    color:white;
+}
+
+body {
+    background-image: url("../img/starter_bg.png");
+    background-repeat: no-repeat;
+    -moz-background-size: 100%; /* Firefox 3.6+ */
+    -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+    -o-background-size: 100%; /* Opera 9.6+ */
+    background-size: 100%; /* Современные браузеры */
+
+    font-family: 'Raleway', sans-serif; /*Шрифт*/
+    font-size: 16px;
+
+    width: 448px;
+    height: 494px;
+    padding: 15px;
+    border-radius: 10px;
+
+    color: white;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+/*
+.close {
+    display: inline-block;
+    padding: 0 12px;
+    margin: 10px;
+    text-decoration: none;
+    background: #f2f2f2;
+    font-size: 14pt;
+    cursor:pointer;
+}*/
+.close{
+    color: white;
+    font-size: 18px;
+    font-weight: inherit;
+    background: #0A9E07;
+    border-radius: 5px;
+    padding: 6px 48px;
+    margin: 20px 0 10px 0;
+}
+.close:hover {
+    background-color: #0A7C07;
+}
+form{
+    text-align: center;
+    background-color: rgba(32, 35, 40, 0.75);
+    border-radius: 10px;
+    padding: 20px;
+}
+title{
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 145%;
+    text-align: center;
+
+    margin: 46px 62px 20px 62px;
+}
+input{
+    margin: 12px auto;
+    width: 400px;
+    color: white;
+    border: 1px solid #888888;
+    font-size: 15px;
+    line-height: 170%;
+
+    border-radius: 5px;
+    background-color: rgba(32, 35, 40, 0);
+}
+
+p{
+    margin: 0;
+    line-height: 170%;
+}
+p a{
+    color: #0A9E07;
+}
