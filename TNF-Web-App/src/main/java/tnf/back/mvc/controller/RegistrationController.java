@@ -19,7 +19,7 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String registration() {
-        return "registration";
+        return "temp_registration";
     }
 
 //    @PostMapping("/registration")
@@ -50,7 +50,7 @@ public class RegistrationController {
         User u = repository.findByUsername(username);
         if (u != null) {
             model.addAttribute("message", "USER EXISTS!!!");
-            return "registration";
+            return "temp_registration";
         }
 
         User user = new User(username, password, email, true, Collections.singleton(Role.USER));
