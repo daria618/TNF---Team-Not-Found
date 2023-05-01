@@ -1,0 +1,19 @@
+
+header .custom-navbar a{
+    color: black;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 100;
+    margin: 0 0.5%;
+}
+header .custom-navbar a:hover {
+    cursor: pointer;
+    color: white;
+    background: #0A9E07;
+}
+header .custom-navbar a.active{
+    pointer-events: none;
+    background: #0A9E07;
+    color: white;
+}
