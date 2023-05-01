@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>TEMP ROUTE EDITOR</title>
+    <script src="../static/script/addInput.js"></script>
 </head>
 <body>
-
+<div>TEMP ROUTE EDITOR</div>
+<form id="route_configurator" action="/route/create/tryAdd" method="post">
+    <input type="text" placeholder="название" name="name" id="name"/>
+    <input type="text" placeholder="краткое описание" name="short_description" id="short_description">
+    <input type="text" placeholder="описание" name="description" id="description">
+    <button type="button" onclick="addInput()">Add Input</button>
+    <input type="submit" value="создать">
+</form>
 </body>
 </html>

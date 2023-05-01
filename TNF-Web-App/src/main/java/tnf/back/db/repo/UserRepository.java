@@ -5,4 +5,5 @@ import tnf.back.db.entityes.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
+
 }
