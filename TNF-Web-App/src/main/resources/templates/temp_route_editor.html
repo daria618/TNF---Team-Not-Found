@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>TEMP ROUTE EDITOR</title>
     <script src="../static/script/addInput.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=a6743776-fded-4335-995e-e61a3768858c&lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
 <div>TEMP ROUTE EDITOR</div>
@@ -14,6 +15,35 @@
     <button type="button" onclick="addInput()">Add Input</button>
     <input type="submit" value="создать">
 </form>
-<p th:text="${sometext}">SOMETEXT</p>
+
+<div>
+    <div id="map" style="width: 50%; height: 400px;"></div>
+    <script type="text/javascript">
+        ymaps.ready(init);
+
+        function init(){
+            var myMap = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 12
+            });
+
+            ymaps.route([
+                'Москва, метро Смоленская',
+                [55.72, 37.62]
+            ]).then(function (route) {
+                myMap.geoObjects.add(route);
+            }, function (error) {
+                alert("Возникла ошибка: " + error.message);
+            });
+        }
+    </script>
+</div>
+
+<div th:if="${points}" th:each="item : ${points}">
+    <p th:text="${item.getName()}"></p>
+    <p th:text="${item.getDescription()}"></p>
+    <p th:text="${item.getShortDescription()}"></p>
+</div>
+
 </body>
 </html>

@@ -11,20 +11,12 @@ import tnf.back.db.entityes.Role;
 import tnf.back.db.entityes.Route;
 import tnf.back.db.entityes.User;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
 @Controller
 public class NewRouteController {
-
-    private final Route testRoute = new Route(
-            "TEST_ROUTE",
-            "TSD",
-            "TD",
-            new User("TESTUSER", "TESTPASSWORD", "TESTEMAIL", true, Collections.singleton(Role.USER)),
-            0,
-            "NULL"
-    );
 
     @GetMapping("/editor/create")
     public String OpenEditorCreate(){
@@ -40,14 +32,15 @@ public class NewRouteController {
     public String acceptForm(HttpServletRequest request, Model model){
         Map<String, String[]> parameterMap = request.getParameterMap();
 
-        StringBuilder builder = new StringBuilder();
+        ArrayList<Double> x = new ArrayList<>();
+        ArrayList<Double> y = new ArrayList<>();
 
         parameterMap.forEach((key, value) -> {
-            if (!key.equals("_csrf"))
-                builder.append(key).append(" = ").append(value[0]).append("\n");
+//            if (!key.equals("_csrf"))
+//                builder.append(key).append(" = ").append(value[0]).append("\n");
         });
 
-        model.addAttribute("sometext", builder.toString());
+//        model.addAttribute("sometext", builder.toString());
 
         return "redirect:/editor/edit";
     }

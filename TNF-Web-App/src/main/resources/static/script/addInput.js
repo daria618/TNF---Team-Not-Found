@@ -11,8 +11,8 @@ function addInput() {
     lati.type = "text";
     lang.classList.add("latiClass")
 
-    lang.name = "lang" + (form.getElementsByClassName("langClass").length);
-    lati.name = "lati" + (form.getElementsByClassName("latiClass").length);
+    lang.name = "x" + (form.getElementsByClassName("langClass").length);
+    lati.name = "y" + (form.getElementsByClassName("latiClass").length);
 
     newDiv.appendChild(lang)
     newDiv.appendChild(lati)

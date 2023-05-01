@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -31,15 +32,28 @@ public class Route {
     @Enumerated(EnumType.STRING)
     private Set<RouteCategory> categories;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn
+    private List<MapPoint> points;
+
     public Route() {
     }
 
-    public Route(String name, String shortDescription, String description, User author, double rating, String imageName) {
+    public Route(
+            String name,
+            String shortDescription,
+            String description,
+            User author,
+            double rating,
+            String imageName,
+            List<MapPoint> points
+    ) {
         this.name = name;
         this.shortDescription = shortDescription;
         this.description = description;
         this.author = author;
         this.rating = rating;
         this.imageName = imageName;
+        this.points = points;
     }
 }
