@@ -31,8 +31,11 @@
     <div class="row">
         <div class="col-4">
             <div class="d-flex profil">
-                <img src="../static/img/person.jpg" class="img-fluid" alt="photo">
+                <img src="../static/img/person.jpg" class="img-fluid" alt="photo" style="align-content: center">
                 <p class="name d-flex mx-2 mt-3">Имя пользователя</p>
+                <form th:action="@{/logout}" method="post">
+                    <input class="btn close" type="submit" value="Выйти"/>
+                </form>
             </div>
             <div>
                 <form class="row">
