@@ -1,14 +1,11 @@
 package tnf.back.temp;
 
-import org.hibernate.annotations.Comment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import tnf.back.db.entityes.*;
 import tnf.back.db.repo.RouteRepository;
 import tnf.back.db.repo.UserRepository;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -23,7 +20,7 @@ public class DBInit implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         User testUser = createTestUser();
         User anotherTestUser = createAnotherTestUser();
         User admin = createAdmin();
@@ -103,7 +100,7 @@ public class DBInit implements CommandLineRunner {
                     add(new MapPoint("56.837380", "60.590364", null));
                     add(new MapPoint("56.838615", "60.597998", null));
                 }},
-                Collections.singleton(RouteCategory.ART)
+                Collections.singleton(RouteCategory.SOLO)
         );
     }
 
@@ -120,7 +117,7 @@ public class DBInit implements CommandLineRunner {
                     add(new MapPoint("56.845208", "60.612073", null));
                     add(new MapPoint("56.847944", "60.637457", null));
                 }},
-                Collections.singleton(RouteCategory.TRAVEL)
+                Collections.singleton(RouteCategory.ADVENTURE)
         );
     }
 

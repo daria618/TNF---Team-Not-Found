@@ -4,10 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum RouteCategory {
-    TRAVEL("Путешественникам"),
+    ADVENTURE("Искателям приключений"),
     HISTORY("Любителям истории"),
-    ART("Ценителям искусства"),
-    ROMANTIC("Романтика");
+    SOLO("Одиноким путешественникам"),
+    ROMANTIC("Ищущим романтический отдых");
 
     private final String textRepresent;
 
