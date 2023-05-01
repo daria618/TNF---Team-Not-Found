@@ -19,13 +19,13 @@ main h4{
     height: 24px;
 }
 .close{
+    width: 100%;
     line-height: 200%;
     color: white;
     font-weight: inherit;
     background: #0A9E07;
     border-radius: 5px;
     border: 0;
-    padding: 6px 48px;
     margin: 20px 0 10px 0;
 }
 .close:hover {
@@ -37,5 +37,11 @@ input[type=email], input[type=password], input[type=text] {
     padding: 12px 20px;
     display: inline-block;
     border: 1px solid #666;
+    box-sizing: border-box;
+}
+input[type=file]{
+    width: 100%;
+    padding: 12px 0;
+    display: inline-block;
     box-sizing: border-box;
 }
