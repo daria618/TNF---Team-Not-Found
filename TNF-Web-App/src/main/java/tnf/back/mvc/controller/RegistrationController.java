@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import tnf.back.db.entityes.Role;
 import tnf.back.db.entityes.User;
 import tnf.back.db.repo.UserRepository;
@@ -33,6 +32,11 @@ public class RegistrationController {
     ) {
         User u = repository.findByUsername(username);
         if (u != null) {
+            model.addAttribute("error", "Пользователь с таким имененм уже существует");
+            return "/registration";
+        }
+        if (!password.equals(confirm_password)){
+            model.addAttribute("error", "Пароли не совпадают");
             return "/registration";
         }
 
