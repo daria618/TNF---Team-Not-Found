@@ -27,16 +27,18 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+    private String photo;
 
     public User() {
     }
 
-    public User(String username, String password, String email, boolean active, Set<Role> roles) {
+    public User(String username, String password, String email, boolean active, Set<Role> roles, String photo) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.active = active;
         this.roles = roles;
+        this.photo = photo;
     }
 
     @Override

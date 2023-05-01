@@ -40,7 +40,7 @@ public class RegistrationController {
             return "/registration";
         }
 
-        User user = new User(username, password, email, true, Collections.singleton(Role.USER));
+        User user = new User(username, password, email, true, Collections.singleton(Role.USER), null);
         repository.save(user);
 
         return "redirect:/login";

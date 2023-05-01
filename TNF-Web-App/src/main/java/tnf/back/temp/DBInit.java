@@ -46,7 +46,8 @@ public class DBInit implements CommandLineRunner {
                 "testUser",
                 "testUser@email.com",
                 true,
-                Collections.singleton(Role.USER)
+                Collections.singleton(Role.USER),
+                null
         );
     }
 
@@ -56,7 +57,8 @@ public class DBInit implements CommandLineRunner {
                 "anotherTestUser",
                 "anotherTestUser@email.com",
                 true,
-                Collections.singleton(Role.USER)
+                Collections.singleton(Role.USER),
+                null
         );
     }
 
@@ -66,7 +68,8 @@ public class DBInit implements CommandLineRunner {
                 "admin",
                 "admin@email.com",
                 true,
-                Collections.singleton(Role.ADMIN)
+                Collections.singleton(Role.ADMIN),
+                null
         );
     }
 
