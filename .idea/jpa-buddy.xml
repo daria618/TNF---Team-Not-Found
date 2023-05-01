@@ -3,6 +3,7 @@
   <component name="JpaBuddyIdeaProjectConfig">
     <option name="defaultUnitInitialized" value="true" />
     <option name="renamerInitialized" value="true" />
-    <option name="newEntityIdStrategy" />
+    <option name="newEntityIdType" value="Long" />
+    <option name="newEntityIdStrategy" value="Auto" />
   </component>
 </project>
