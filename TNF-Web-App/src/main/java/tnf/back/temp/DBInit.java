@@ -34,6 +34,7 @@ public class DBInit implements CommandLineRunner {
         Route route1 = createTestRoute_1(admin);
         Route route2 = createTestRoute_2(admin);
         Route route3 = createTestRoute_3(anotherTestUser);
+        Route routeMixed = createTestRoute_Mixed(anotherTestUser);
 
         userRepository.save(testUser);
         userRepository.save(anotherTestUser);
@@ -42,6 +43,7 @@ public class DBInit implements CommandLineRunner {
         routeRepository.save(route1);
         routeRepository.save(route2);
         routeRepository.save(route3);
+        routeRepository.save(routeMixed);
     }
 
     private User createTestUser() {
@@ -117,6 +119,22 @@ public class DBInit implements CommandLineRunner {
                 new LinkedList<>(){{
                     add(new MapPoint("56.848356", "60.601967", null));
                     add(new MapPoint("56.845208", "60.612073", null));
+                    add(new MapPoint("56.847944", "60.637457", null));
+                }}
+        );
+    }
+
+    public Route createTestRoute_Mixed(User author) {
+        return new Route(
+                "TESTROUT_3",
+                "SD333",
+                "D333",
+                author,
+                30,
+                null,
+                new LinkedList<>(){{
+                    add(new MapPoint("56.848356", "60.601967", null));
+                    add(new MapPoint(null, null, "улица Луначарского, 31, Екатеринбург"));
                     add(new MapPoint("56.847944", "60.637457", null));
                 }}
         );
