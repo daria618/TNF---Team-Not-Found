@@ -19,7 +19,7 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 body {
-    background-image: url('../../../../../../../web-site/img/Rectangle_1.png');
+    background-image: url("../img/starter_bg.png");
     background-repeat: no-repeat;
     -moz-background-size: 100%; /* Firefox 3.6+ */
     -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */

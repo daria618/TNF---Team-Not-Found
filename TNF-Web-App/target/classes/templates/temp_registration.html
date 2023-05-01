@@ -4,11 +4,13 @@
   <title>Spring Security Example </title>
 </head>
 <body>
-<form th:action="@{/login}" method="post">
+<p th:text="'Message:' + ${message} + '!'" />
+ADD NEW USR
+<form th:action="@{/registration}" method="post">
   <div><label> User Name : <input type="text" name="username"/> </label></div>
+  <div><label> EMail : <input type="text" name="email"/> </label></div>
   <div><label> Password: <input type="password" name="password"/> </label></div>
-  <div><input type="submit" value="Sign In"/></div>
+  <div><input type="submit" value="Зарегаться"/></div>
 </form>
-<a href="/registration">registration</a>
 </body>
 </html>
