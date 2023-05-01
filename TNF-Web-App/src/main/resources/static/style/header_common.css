@@ -3,9 +3,9 @@ header .custom-navbar a{
     color: black;
     border-radius: 5px;
     text-decoration: none;
-    text-align: center;
-    font-weight: 100;
+    font-weight: 500;
     margin: 0 0.5%;
+    opacity: 1;
 }
 header .custom-navbar a:hover {
     cursor: pointer;
