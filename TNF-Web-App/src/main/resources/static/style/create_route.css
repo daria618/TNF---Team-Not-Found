@@ -1,0 +1,19 @@
+main{
+    width: 100%;
+    height: revert;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #666;
+    box-sizing: border-box;
+}
+.create{
+    width: 40%;
+}
+.map{
+    width: 58%;
+    height: 400px;
+}

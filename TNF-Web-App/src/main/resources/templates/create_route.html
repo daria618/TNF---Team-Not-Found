@@ -14,12 +14,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;600;900&display=swap" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="../static/style/account.css" th:href="@{../static/style/account.css}">
+    <link rel="stylesheet" type="text/css" href="../static/style/create_route.css" th:href="@{../static/style/create_route.css}">
     <link rel="stylesheet" type="text/css" href="../static/style/header_common.css" th:href="@{../static/style/header_common.css}">
     <link rel="stylesheet" type="text/css" href="../static/style/common.css" th:href="@{../static/style/common.css}">
 </head>
 <body>
-<header  class="container-fluid shadow p-3 mb-5 bg-body">
+<header class="container-fluid shadow p-3 mb-5 bg-body">
     <div class="container">
         <nav class="navbar custom-navbar flex-column flex-sm-row">
             <a class="flex-fill text-center nav-link" href="/home">Главная</a>
@@ -31,56 +31,18 @@
     </div>
 </header>
 
-<main class="container mt-5">
-    <div class="row">
-        <div class="col-4">
-            <div class="d-flex profil">
-                <img src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
-                <p class="name d-flex mx-2 mt-3">Имя пользователя</p>
-                <form th:action="@{/logout}" method="post" class="d-flex align-items-center ms-5">
-                    <input class="image " type="image" alt="Кнопка «input»" src="../static/img/exit.png"/>
-                </form>
+<main class="container-fluid mb-4">
+    <div class="container d-flex">
+        <div class="create">
+            <div class="mb-3 mt-3 mx-4">
+                <input type="text" placeholder="Название маршрута" name="name">
             </div>
-            <div>
-                <form class="row">
-
-                    <label for="validationServerUsername" class="form-label">Имя пользователя</label>
-                    <input type="text" class="form" id="validationServerUsername" placeholder="Имя пользователя"
-                           required>
-
-                    <label for="validationServerEmail" class="form-label mt-4">Адрес эл. почты</label>
-                    <input type="email" class="form" id="validationServerEmail" placeholder="Почта" required>
-
-                    <label for="validationServerPhoto" class="form-label mt-4">Фото пользователя</label>
-
-                    <label class="input-file">
-                        <span class="input-file-text" type="text"></span>
-                        <input type="file" name="file" id="validationServerPhoto" placeholder="Фото" required>
-                        <span class="input-file-btn">Выберите файл</span>
-                    </label>
-
-                    <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
-                    <script>
-                        $('.input-file input[type=file]').on('change', function(){
-                            let file = this.files[0];
-                            $(this).closest('.input-file').find('.input-file-text').html(file.name);
-                        });
-                    </script>
-                </form>
+            <div class="mb-3 mx-4">
+                <input type="text" placeholder="Описание" name="info" style="height: 319px">
             </div>
-            <button class="btn close" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
-            <div class="mt-4">
-                <h4>Изменить пароль</h4>
-                <form class="row">
-                    <input type="password" class="form" placeholder="Введите старый пароль..." required>
-                    <input type="password" class="form mt-4" placeholder="Введите новый пароль..." required>
-                    <input type="password" class="form mt-4" placeholder="Введите новый пароль еще раз..." required>
-                </form>
-            </div>
-            <button class="btn close  " type="submit">СМЕНИТЬ ПАРОЛЬ</button>
         </div>
-        <div class="col-6">
-
+        <div class="map" style="background-color: #666666">
+                Тут должна быть карта)
         </div>
     </div>
 </main>
