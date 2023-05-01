@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -23,6 +25,11 @@ public class Route {
     private double rating;
     @Column(name = "image_name")
     private String imageName;
+
+    @ElementCollection(targetClass = RouteCategory.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "route_categories", joinColumns = @JoinColumn(name = "route_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<RouteCategory> categories;
 
     public Route() {
     }

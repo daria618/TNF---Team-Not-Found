@@ -9,8 +9,11 @@ import tnf.back.db.repo.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService {
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

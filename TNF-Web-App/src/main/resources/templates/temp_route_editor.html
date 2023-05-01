@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>TEMP ROUTE EDITOR</title>
@@ -7,12 +7,13 @@
 </head>
 <body>
 <div>TEMP ROUTE EDITOR</div>
-<form id="route_configurator" action="/route/create/tryAdd" method="post">
+<form id="route_configurator" action="/editor/create/tryAdd" th:action="@{/editor/create/tryAdd}" method="post">
     <input type="text" placeholder="название" name="name" id="name"/>
     <input type="text" placeholder="краткое описание" name="short_description" id="short_description">
     <input type="text" placeholder="описание" name="description" id="description">
     <button type="button" onclick="addInput()">Add Input</button>
     <input type="submit" value="создать">
 </form>
+<p th:text="${sometext}">SOMETEXT</p>
 </body>
 </html>
