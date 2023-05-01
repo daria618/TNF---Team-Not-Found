@@ -24,16 +24,29 @@
         <button type="button" onclick="addPointName()">добавить точку по названию</button>
         <button type="button" onclick="addPointName()">выбрать точку</button>
     </div>
+
+    <div th:if="${points}" th:each="point, index : ${points}">
+        <div th:if="${point.getTextRepresent() != null}">
+            <input type="text" th:name="'name_name_ind_'+${#vars.index}">
+        </div>
+        <div th:if="${point.getLatitude() != null}">
+            <input type="text" th:name="'cord_lon_ind_'+${#vars.index}">
+            <input type="text" th:name="'cord_lat_ind_'+${#vars.index}">
+        </div>
+    </div>
+
     <input type="submit" value="создать">
 </form>
 
-<div th:if="${points}" th:each="item : ${points}">
-    <span th:text="${item.getLatitude()}"></span>
-    <span th:text="${item.getLongitude()}"></span>
-    <span th:text="${item.getTextRepresent()}"></span>
+<div th:if="${points}" th:each="point : ${points}">
+    <span th:text="${point.getLatitude()}"></span>
+    <span th:text="${point.getLongitude()}"></span>
+    <span th:text="${point.getTextRepresent()}"></span>
 </div>
 
-<div th:text="${message}"></div>
+<div th:if="${messages}" th:each="item : ${messages}">
+    <div th:text="${item}"></div>
+</div>
 
 </body>
 </html>

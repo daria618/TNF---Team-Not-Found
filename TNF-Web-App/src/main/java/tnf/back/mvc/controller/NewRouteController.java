@@ -30,7 +30,7 @@ public class NewRouteController {
 
         ArrayList<MapPoint> points = new ArrayList<>(16);
 
-        StringBuilder builder = new StringBuilder();
+        ArrayList<String> messages = new ArrayList<>(16);
 
         parameterMap.forEach((key, value) -> {
             if (!key.equals("_csrf")){
@@ -44,11 +44,15 @@ public class NewRouteController {
                         case "lon" -> points.get(index).setLongitude(value[0]);
                     }
                 }
-                builder.append(key).append(" = ").append(value[0]).append("   |   ");
+
             }
+            StringBuilder builder = new StringBuilder(key + " -> |");
+            for (var v : value)
+                builder.append(v).append("|");
+            messages.add(builder.toString());
         });
 
-        model.addAttribute("message", builder.toString());
+        model.addAttribute("messages", messages);
         model.addAttribute("points", points);
 
         return "temp_route_editor";
