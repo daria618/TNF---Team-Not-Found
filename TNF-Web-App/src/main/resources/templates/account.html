@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <!-- Обязательные метатеги -->
     <meta charset="UTF-8">
@@ -35,26 +35,27 @@
     <div class="row">
         <div class="col-4">
             <div class="d-flex profil">
-                <img src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
-                <p class="name d-flex mx-2 mt-3">Имя пользователя</p>
+                <img th:if="${user.getPhoto() != null}" th:src="'/img/'+${user.getPhoto()}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
+                <img th:if="${user.getPhoto() == null}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
+                <p class="name d-flex mx-2 mt-3" th:text="${user.getUsername()}">Имя пользователя</p>
                 <form th:action="@{/logout}" method="post" class="d-flex align-items-center ms-5">
                     <input class="image " type="image" alt="Кнопка «input»" src="../static/img/exit.png"/>
                 </form>
             </div>
             <div>
-                <form class="row">
+                <form class="row" method="post" enctype="multipart/form-data" th:action="@{/account/edit}">
                     <label for="validationServerUsername" class="form-label">Имя пользователя</label>
-                    <input type="text" class="form" id="validationServerUsername" placeholder="Имя пользователя"
+                    <input type="text" class="form" th:value="${user.getUsername()}" name="name" id="validationServerUsername" placeholder="Имя пользователя"
                            required>
 
                     <label for="validationServerEmail" class="form-label mt-4">Адрес эл. почты</label>
-                    <input type="email" class="form" id="validationServerEmail" placeholder="Почта" required>
+                    <input type="email" class="form" th:value="${user.getEmail()}" name="email" id="validationServerEmail" placeholder="Почта" required>
 
-                    <label for="validationServerImg" class="form-label mt-4">Фото пользователя</label>
-                    <input type="file" class="form" id="validationServerImg" placeholder="Фото" required>
+                    <label for="validationServerImg" class="form-label mt-4">Загрузить фото</label>
+                    <input type="file" class="form" name="photo" id="validationServerImg" placeholder="Фото" required>
+                    <button class="btn close" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
                 </form>
             </div>
-            <button class="btn close" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
             <div class="mt-4">
                 <h4>Изменить пароль</h4>
                 <form class="row">
