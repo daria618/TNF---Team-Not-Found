@@ -147,21 +147,23 @@
 
   <!--    Карточки-->
     <div class="row row-cols-2 row-cols-sm-1 justify-content-between">
-      <div class="card col">
+
+      <div class="card col" th:each="item : ${routes}">
         <div class="card_img m-3">
           <img src="../static/img/fon.jpg" class="card-img-top" alt="Фото">
         </div>
         <div class="card-body">
           <div class="d-flex mb-2">
             <vr class="vr"></vr>
-            <h5 class="card-title align-self-start ms-3">Название маршрута*</h5>
+            <h5 class="card-title align-self-start ms-3" th:text="${item.getName()}">Название маршрута*</h5>
           </div>
           <div class="mb-2">
-            <p class="card-text ms-3">Небольшой пример текста, который должен основываться на названии карточки и составлять основную часть содержимого карты.</p>
+            <p class="card-text ms-3" th:text="${item.getShortDescription()}">Небольшой пример текста, который должен основываться на названии карточки и составлять основную часть содержимого карты.</p>
           </div>
-          <a href="#" class="ms-3">К маршруту</a>
+          <a th:href="'/routes/'+${item.getId()}" class="ms-3">К маршруту</a>
         </div>
       </div>
+
     </div>
   </main>
 

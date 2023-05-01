@@ -4,10 +4,7 @@ import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import tnf.back.db.entityes.MapPoint;
-import tnf.back.db.entityes.Role;
-import tnf.back.db.entityes.Route;
-import tnf.back.db.entityes.User;
+import tnf.back.db.entityes.*;
 import tnf.back.db.repo.RouteRepository;
 import tnf.back.db.repo.UserRepository;
 
@@ -78,9 +75,9 @@ public class DBInit implements CommandLineRunner {
 
     public Route createTestRoute_1(User author) {
         return new Route(
-                "TESTROUT_1",
-                "SD",
-                "D",
+                "Тестовый маршрут №1, названия",
+                "АааааАААААааААааАааааАААААааААааАааааАААААааААаа_ТЕСТОВЫЙ_1",
+                "Это типа длинное описание 1",
                 author,
                 0,
                 null,
@@ -88,15 +85,16 @@ public class DBInit implements CommandLineRunner {
                     add(new MapPoint(null, null, "улица Челюскинцев, 33А, Екатеринбург"));
                     add(new MapPoint(null, null, "улица Луначарского, 31, Екатеринбург"));
                     add(new MapPoint(null, null, "ул. Железнодорожников, 3, Екатеринбург"));
-                }}
+                }},
+                Collections.singleton(RouteCategory.HISTORY)
         );
     }
 
     public Route createTestRoute_2(User author) {
         return new Route(
-                "TESTROUT_2",
-                "SD222",
-                "D222",
+                "Тестовый маршрут №2, координаты",
+                "бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-ТЕСТОВЫЙ_2",
+                "Это типа длинное описание 2",
                 author,
                 15,
                 null,
@@ -104,15 +102,16 @@ public class DBInit implements CommandLineRunner {
                     add(new MapPoint("56.838261", "60.585636", null));
                     add(new MapPoint("56.837380", "60.590364", null));
                     add(new MapPoint("56.838615", "60.597998", null));
-                }}
+                }},
+                Collections.singleton(RouteCategory.ART)
         );
     }
 
     public Route createTestRoute_3(User author) {
         return new Route(
-                "TESTROUT_3",
-                "SD333",
-                "D333",
+                "Тестовый маршрут №3, координаты",
+                "бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-ТЕСТОВЫЙ_3",
+                "Это типа длинное описание 3",
                 author,
                 30,
                 null,
@@ -120,15 +119,16 @@ public class DBInit implements CommandLineRunner {
                     add(new MapPoint("56.848356", "60.601967", null));
                     add(new MapPoint("56.845208", "60.612073", null));
                     add(new MapPoint("56.847944", "60.637457", null));
-                }}
+                }},
+                Collections.singleton(RouteCategory.TRAVEL)
         );
     }
 
     public Route createTestRoute_Mixed(User author) {
         return new Route(
-                "TESTROUT_3",
-                "SD333",
-                "D333",
+                "Тестовый маршрут №4 микс",
+                "Это описание тестового маршрута с точками заданными разными методами",
+                "Это типа длинное описание 4",
                 author,
                 30,
                 null,
@@ -136,7 +136,8 @@ public class DBInit implements CommandLineRunner {
                     add(new MapPoint("56.848356", "60.601967", null));
                     add(new MapPoint(null, null, "улица Луначарского, 31, Екатеринбург"));
                     add(new MapPoint("56.847944", "60.637457", null));
-                }}
+                }},
+                Collections.singleton(RouteCategory.ROMANTIC)
         );
     }
 

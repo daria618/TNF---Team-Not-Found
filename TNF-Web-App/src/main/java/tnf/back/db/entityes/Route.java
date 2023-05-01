@@ -46,7 +46,8 @@ public class Route {
             User author,
             double rating,
             String imageName,
-            List<MapPoint> points
+            List<MapPoint> points,
+            Set<RouteCategory> categories
     ) {
         this.name = name;
         this.shortDescription = shortDescription;
@@ -55,5 +56,6 @@ public class Route {
         this.rating = rating;
         this.imageName = imageName;
         this.points = points;
+        this.categories = categories;
     }
 }
