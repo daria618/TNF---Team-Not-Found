@@ -13,6 +13,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;600;900&display=swap" rel="stylesheet">
 
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=a6743776-fded-4335-995e-e61a3768858c&lang=ru_RU" type="text/javascript"></script>
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../static/style/create_route.css" th:href="@{../static/style/create_route.css}">
     <link rel="stylesheet" type="text/css" href="../static/style/header_common.css" th:href="@{../static/style/header_common.css}">
@@ -24,9 +25,9 @@
         <nav class="navbar custom-navbar flex-column flex-sm-row">
             <a class="flex-fill text-center nav-link" href="/home">Главная</a>
             <a class="flex-fill text-center nav-link" href="/routes">Маршруты</a>
-            <a class="flex-fill text-center nav-link disabled" href="/addRoute">Добавить свой маршрут</a>
+            <a class="flex-fill text-center nav-link" href="/addRoute">Добавить свой маршрут</a>
             <a class="flex-fill text-center nav-link active" aria-current="page" href="/account">Личный кабинет</a>
-            <a class="flex-fill text-center nav-link disabled" href="/about">О проекте</a>
+            <a class="flex-fill text-center nav-link" href="/about">О проекте</a>
         </nav>
     </div>
 </header>

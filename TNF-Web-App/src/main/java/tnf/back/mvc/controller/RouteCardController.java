@@ -1,11 +1,15 @@
 package tnf.back.mvc.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import tnf.back.db.entityes.Comment;
 import tnf.back.db.entityes.MapPoint;
+import tnf.back.db.entityes.User;
 import tnf.back.db.repo.CommentRepository;
 import tnf.back.db.repo.RouteRepository;
 import tnf.back.logic.Checker;
@@ -24,7 +28,13 @@ public class RouteCardController {
     }
 
     @GetMapping("/routes/{route_id}")
-    public String open(@PathVariable("route_id") Long id, Model model){
+    public String open(
+            @AuthenticationPrincipal User user,
+            @PathVariable("route_id") Long id,
+            Model model
+    ) {
+        model.addAttribute("logUser", user);
+
         var route = routeRepository.findById(id).get();
         model.addAttribute("route", route);
 
@@ -37,7 +47,20 @@ public class RouteCardController {
         return "route_card";
     }
 
-    private String getMapPointStr(MapPoint point){
+    @PostMapping("/routes/{route_id}")
+    public String acceptAddCommentForm(
+            @AuthenticationPrincipal User user,
+            @PathVariable("route_id") Long id,
+            @RequestParam("comment_text") String comment_text,
+            Model model
+    ) {
+        var route = routeRepository.findById(id).get();
+        Comment comment = new Comment(comment_text, 0L, user, route);
+        commentRepository.saveAndFlush(comment);
+        return "redirect:/routes/" + id;
+    }
+
+    private String getMapPointStr(MapPoint point) {
         ArrayList<String> strings = new ArrayList<>();
 
         if (!Checker.isEmptyString(point.getLatitude()))
@@ -48,7 +71,7 @@ public class RouteCardController {
             strings.add(point.getTextRepresent());
 
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < strings.size(); i++){
+        for (int i = 0; i < strings.size(); i++) {
             result.append(strings.get(i));
             if (i != strings.size() - 1)
                 result.append("|");

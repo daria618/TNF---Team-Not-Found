@@ -104,15 +104,27 @@
 
   <div class="reviews mb-4">
     <h5 class="my-2 mx-4" >Отзывы</h5>
-    <div class="review border mb-2" th:each="comment : ${comments}">
+
+<!--    ПЕРЕДЕЛАТЬ-->
+    <div class="review border mb-2">
       <div class="d-flex profil mt-4 ms-4">
         <img src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
-        <p class="name mx-2 mt-3" th:text="${comment.getAuthor().getUsername()}">Имя пользователя</p>
+        <p class="name mx-2 mt-3" th:text="${logUser.getUsername()}"></p>
       </div>
-      <div class="text mt-2 ms-4 mb-4 me-4" th:text="${comment.getText()}">
-        <p>Идейные соображения высшего порядка, а также реализация намеченных плановых заданий влечет за собой процесс внедрения и модернизации позиций, занимаемых участниками в отношении поставленных задач. Идейные соображения высшего порядка, а также укрепление и развитие структуры представляет собой интересный эксперимент проверки модели развития.</p>
+      <div class="text mt-2 ms-4 mb-4 me-4">
+        <form method="post" th:action="'/routes/'+${route.getId()}">
+          <div>
+<!--            <input type="text" placeholder="..." name="new_comment_text" style="height: 150px; width: 100%">-->
+            <textarea rows="4" cols="150" style="height: 150px; width: 100%" name="comment_text"></textarea>
+<!--            <textarea rows="4" cols="150" style="height: 150px; width: 100%" name="comment_text"></textarea>-->
+          </div>
+          <div>
+            <button class="flex-fill text-center nav-link active" type="submit">Отправить</button>
+          </div>
+        </form>
       </div>
     </div>
+
     <div class="review border mb-2" th:each="comment : ${comments}">
       <div class="d-flex profil mt-4 ms-4">
         <img src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">

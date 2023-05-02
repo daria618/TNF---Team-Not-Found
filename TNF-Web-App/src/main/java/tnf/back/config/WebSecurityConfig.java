@@ -36,7 +36,8 @@ public class WebSecurityConfig {
                                 "/home",
                                 "/registration",
                                 "/static/**",
-                                "/routes"
+                                "/routes/**"
+//                                "/routes",
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
