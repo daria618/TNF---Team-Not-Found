@@ -3,41 +3,49 @@ package tnf.back.temp;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import tnf.back.db.entityes.*;
+import tnf.back.db.repo.CommentRepository;
 import tnf.back.db.repo.RouteRepository;
 import tnf.back.db.repo.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 @Component
 public class DBInit implements CommandLineRunner {
+    private static final Random random = new Random(System.currentTimeMillis());
     private final UserRepository userRepository;
     private final RouteRepository routeRepository;
+    private final CommentRepository commentRepository;
 
-    public DBInit(UserRepository userRepository, RouteRepository routeRepository) {
+    public DBInit(UserRepository userRepository, RouteRepository routeRepository, CommentRepository commentRepository) {
         this.userRepository = userRepository;
         this.routeRepository = routeRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
     public void run(String... args) {
-        User testUser = createTestUser();
-        User anotherTestUser = createAnotherTestUser();
-        User admin = createAdmin();
+        ArrayList<User> users = new ArrayList<>() {{
+            add(createTestUser());
+            add(createAnotherTestUser());
+            add(createAdmin());
+        }};
 
-        Route route1 = createTestRoute_1(admin);
-        Route route2 = createTestRoute_2(admin);
-        Route route3 = createTestRoute_3(anotherTestUser);
-        Route routeMixed = createTestRoute_Mixed(anotherTestUser);
+        ArrayList<Route> routes = new ArrayList<>() {{
+            add(createTestRoute_1(users.get(1)));
+            add(createTestRoute_2(users.get(2)));
+            add(createTestRoute_3(users.get(1)));
+            add(createTestRoute_Mixed(users.get(2)));
+        }};
 
-        userRepository.save(testUser);
-        userRepository.save(anotherTestUser);
-        userRepository.save(admin);
+        userRepository.saveAll(users);
+        routeRepository.saveAll(routes);
 
-        routeRepository.save(route1);
-        routeRepository.save(route2);
-        routeRepository.save(route3);
-        routeRepository.save(routeMixed);
+        for (var u : users)
+            for (var r : routes)
+                commentRepository.save(new Comment(randString(random.nextInt(120) + 10), 0L, u, r));
     }
 
     private User createTestUser() {
@@ -81,7 +89,7 @@ public class DBInit implements CommandLineRunner {
                 author,
                 0,
                 null,
-                new LinkedList<>(){{
+                new LinkedList<>() {{
                     add(new MapPoint(null, null, "улица Челюскинцев, 33А, Екатеринбург"));
                     add(new MapPoint(null, null, "улица Луначарского, 31, Екатеринбург"));
                     add(new MapPoint(null, null, "ул. Железнодорожников, 3, Екатеринбург"));
@@ -98,7 +106,7 @@ public class DBInit implements CommandLineRunner {
                 author,
                 15,
                 null,
-                new LinkedList<>(){{
+                new LinkedList<>() {{
                     add(new MapPoint("56.838261", "60.585636", null));
                     add(new MapPoint("56.837380", "60.590364", null));
                     add(new MapPoint("56.838615", "60.597998", null));
@@ -115,7 +123,7 @@ public class DBInit implements CommandLineRunner {
                 author,
                 30,
                 null,
-                new LinkedList<>(){{
+                new LinkedList<>() {{
                     add(new MapPoint("56.848356", "60.601967", null));
                     add(new MapPoint("56.845208", "60.612073", null));
                     add(new MapPoint("56.847944", "60.637457", null));
@@ -132,7 +140,7 @@ public class DBInit implements CommandLineRunner {
                 author,
                 30,
                 null,
-                new LinkedList<>(){{
+                new LinkedList<>() {{
                     add(new MapPoint("56.848356", "60.601967", null));
                     add(new MapPoint(null, null, "улица Луначарского, 31, Екатеринбург"));
                     add(new MapPoint("56.847944", "60.637457", null));
@@ -141,4 +149,14 @@ public class DBInit implements CommandLineRunner {
         );
     }
 
+    private String randString(int length) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            var a = random.nextDouble();
+            if (a < 0.1) builder.append(" ");
+            else if (a < 0.6) builder.append((char) ('a' + random.nextInt(26)));
+            else builder.append((char) ('A' + random.nextInt(26)));
+        }
+        return builder.toString();
+    }
 }

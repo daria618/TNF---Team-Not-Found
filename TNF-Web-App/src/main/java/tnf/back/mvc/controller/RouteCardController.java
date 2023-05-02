@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import tnf.back.db.entityes.MapPoint;
+import tnf.back.db.repo.CommentRepository;
 import tnf.back.db.repo.RouteRepository;
 import tnf.back.logic.Checker;
 
@@ -15,19 +16,25 @@ import java.util.ArrayList;
 public class RouteCardController {
 
     private final RouteRepository routeRepository;
+    private final CommentRepository commentRepository;
 
-    public RouteCardController(RouteRepository routeRepository) {
+    public RouteCardController(RouteRepository routeRepository, CommentRepository commentRepository) {
         this.routeRepository = routeRepository;
+        this.commentRepository = commentRepository;
     }
 
     @GetMapping("/routes/{route_id}")
     public String open(@PathVariable("route_id") Long id, Model model){
         var route = routeRepository.findById(id).get();
         model.addAttribute("route", route);
+
+        var comments = commentRepository.findAllByRoute(route);
+        model.addAttribute("comments", comments);
+
         var texts = new ArrayList<String>();
         for (var point : route.getPoints()) texts.add(getMapPointStr(point));
         model.addAttribute("texts", texts);
-        return "temp_route_card";
+        return "route_card";
     }
 
     private String getMapPointStr(MapPoint point){

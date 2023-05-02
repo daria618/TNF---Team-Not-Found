@@ -29,4 +29,9 @@ public class MapPoint {
         this.longitude = longitude;
         this.textRepresent = textRepresent;
     }
+
+    public String getStr() {
+        if (textRepresent != null) return textRepresent;
+        return "[" + latitude + ", " + longitude + "]";
+    }
 }

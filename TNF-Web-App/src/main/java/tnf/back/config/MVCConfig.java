@@ -18,7 +18,6 @@ public class MVCConfig implements WebMvcConfigurer {
         registry.addViewController("/account").setViewName("account");
 
         registry.addViewController("/routes").setViewName("routes");
-        registry.addViewController("/card").setViewName("temp_route_card");
 //        registry.addViewController("/editor").setViewName("temp_route_editor");
     }
 
