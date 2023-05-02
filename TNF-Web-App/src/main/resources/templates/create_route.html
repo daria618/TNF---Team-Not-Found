@@ -29,8 +29,8 @@
         <nav class="navbar custom-navbar flex-column flex-sm-row">
             <a class="flex-fill text-center nav-link" href="/home">Главная</a>
             <a class="flex-fill text-center nav-link" href="/routes">Маршруты</a>
-            <a class="flex-fill text-center nav-link" href="/addRoute">Добавить свой маршрут</a>
-            <a class="flex-fill text-center nav-link active" aria-current="page" href="/account">Личный кабинет</a>
+            <a class="flex-fill text-center nav-link active" href="/addRoute">Добавить свой маршрут</a>
+            <a class="flex-fill text-center nav-link" aria-current="page" href="/account">Личный кабинет</a>
             <a class="flex-fill text-center nav-link" href="/about">О проекте</a>
         </nav>
     </div>
@@ -38,65 +38,64 @@
 
 <main class="container-fluid mb-4">
     <div class="container d-flex">
-        <form id="route_configurator" action="/editor/create" th:action="@{/editor/create}" method="post">
-            <div>
-                <input type="text" placeholder="название" name="name" id="name"/>
-                <div style="width: 99%;">
-                    Краткое описание
-                    <textarea name="short_description" style="width: 100%; height: 100px"></textarea>
+        <div>
+            <form action="/editor/create/fin" th:action="@{/editor/create/fin}" method="post">
+                <div>
+                    <input type="text" placeholder="название" name="name" id="name"/>
+                    <div>
+                        Краткое описание
+                        <textarea name="short_description" style="width: 100%; height: 100px"></textarea>
+                    </div>
+                    <div>
+                        Подробное описание
+                        <textarea name="description" style="width: 100%; height: 100px"></textarea>
+                    </div>
+                    <button type="submit" style="width: 100%; height: 60px">Create</button>
                 </div>
-                <div style="width: 99%;">
-                    Подробное описание
-                    <textarea name="description" style="width: 100%; height: 100px"></textarea>
-                </div>
-            </div>
-            <div>
-                <button type="button" style="width: 49%; height: 80px;" onclick="create()">создать</button>
-                <button type="button" style="width: 49%; height: 80px;" onclick="addPointCoords()">добавить точку по
-                    координатам
-                </button>
-                <button type="button" style="width: 49%; height: 80px;" onclick="addPointName()"> выбрать точку</button>
-                <button type="button" style="width: 49%; height: 80px;" onclick="addPointName()"> добавить точку по
-                    названию
-                </button>
+            </form>
+            <div class="mt-sm-5" style="width: 100%;">
+                <form method="post" action="/editor/create/add" th:action="@{/editor/create/add}">
+                    <input type="text" style="width: 49%; height: 60px" placeholder="lat" name="lat">
+                    <input type="text" style="width: 49%; height: 60px" placeholder="lon" name="lon">
+                    <input type="text" style="width: 49%; height: 60px" placeholder="name" name="name">
+                    <button type="button" style="width: 49%; height: 60px">select</button>
+                    <button type="submit" style="width: 98.5%; height: 60px">Add Point</button>
+                </form>
             </div>
 
-            <div th:if="${points}" th:each="point, index : ${points}">
-                <div th:if="${point.getTextRepresent() != null}">
-                    <input type="text" th:name="'name_name_ind_'+${#vars.index}">
-                </div>
-                <div th:if="${point.getLatitude() != null}">
-                    <input type="text" th:name="'cord_lon_ind_'+${#vars.index}">
-                    <input type="text" th:name="'cord_lat_ind_'+${#vars.index}">
-                </div>
+            <div th:if="${points}" th:each="point : ${points}">
+                <span th:text="${point.getLatitude()}"></span>
+                <span th:text="${point.getLongitude()}"></span>
+                <span th:text="${point.getTextRepresent()}"></span>
             </div>
-        </form>
+        </div>
+
         <div class="map" id="map" style="background-color: #666666"></div>
-        <!--        <script type="text/javascript" th:inline="javascript">-->
-        <!--            ymaps.ready(init);-->
-        <!--            function init(){-->
-        <!--                var myMap = new ymaps.Map("map", {-->
-        <!--                    center: [56.844376, 60.609048],-->
-        <!--                    zoom: 12-->
-        <!--                });-->
+                <script type="text/javascript" th:inline="javascript">
+                    ymaps.ready(init);
+                    function init(){
+                        var myMap = new ymaps.Map("map", {
+                            center: [56.844376, 60.609048],
+                            zoom: 12
+                        });
 
-        <!--                const jsList = [];-->
-        <!--                [[${texts}]].forEach(function(item) {-->
-        <!--                    console.log(item)-->
-        <!--                    var splited = item.split('|');-->
-        <!--                    if (splited.length === 1) jsList.push(splited[0]);-->
-        <!--                    else jsList.push([parseFloat(splited[0]), parseFloat(splited[1])])-->
-        <!--                });-->
+                        const jsList = [];
+                        [[${texts}]].forEach(function(item) {
+                            console.log(item)
+                            var splited = item.split('|');
+                            if (splited.length === 1) jsList.push(splited[0]);
+                            else jsList.push([parseFloat(splited[0]), parseFloat(splited[1])])
+                        });
 
-        <!--                jsList.forEach(item => console.log(item));-->
+                        jsList.forEach(item => console.log(item));
 
-        <!--                ymaps.route(jsList).then(function (route) {-->
-        <!--                    myMap.geoObjects.add(route);-->
-        <!--                }, function (error) {-->
-        <!--                    alert("Возникла ошибка: " + error.message);-->
-        <!--                });-->
-        <!--            }-->
-        <!--        </script>-->
+                        ymaps.route(jsList).then(function (route) {
+                            myMap.geoObjects.add(route);
+                        }, function (error) {
+                            alert("Возникла ошибка: " + error.message);
+                        });
+                    }
+                </script>
     </div>
 </main>
 

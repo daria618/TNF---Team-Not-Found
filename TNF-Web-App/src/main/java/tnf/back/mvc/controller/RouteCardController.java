@@ -13,6 +13,7 @@ import tnf.back.db.entityes.User;
 import tnf.back.db.repo.CommentRepository;
 import tnf.back.db.repo.RouteRepository;
 import tnf.back.logic.Checker;
+import tnf.back.logic.Transform;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class RouteCardController {
         model.addAttribute("comments", comments);
 
         var texts = new ArrayList<String>();
-        for (var point : route.getPoints()) texts.add(getMapPointStr(point));
+        for (var point : route.getPoints()) texts.add(Transform.MapPointToYMAPString(point));
         model.addAttribute("texts", texts);
         return "route_card";
     }
@@ -60,23 +61,5 @@ public class RouteCardController {
         return "redirect:/routes/" + id;
     }
 
-    private String getMapPointStr(MapPoint point) {
-        ArrayList<String> strings = new ArrayList<>();
-
-        if (!Checker.isEmptyString(point.getLatitude()))
-            strings.add(point.getLatitude());
-        if (!Checker.isEmptyString(point.getLongitude()))
-            strings.add(point.getLongitude());
-        if (!Checker.isEmptyString(point.getTextRepresent()))
-            strings.add(point.getTextRepresent());
-
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < strings.size(); i++) {
-            result.append(strings.get(i));
-            if (i != strings.size() - 1)
-                result.append("|");
-        }
-        return result.toString();
-    }
 
 }

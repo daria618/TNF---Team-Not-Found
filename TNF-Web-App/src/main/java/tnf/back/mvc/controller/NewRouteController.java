@@ -1,62 +1,65 @@
 package tnf.back.mvc.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import tnf.back.db.entityes.MapPoint;
+import tnf.back.db.entityes.Route;
+import tnf.back.db.entityes.RouteCategory;
+import tnf.back.db.entityes.User;
+import tnf.back.db.repo.RouteRepository;
+import tnf.back.logic.Transform;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Collections;
 
 @Controller
 public class NewRouteController {
+
+    private final RouteRepository repository;
+
+    private final ArrayList<MapPoint> points = new ArrayList<>();
+
+    public NewRouteController(RouteRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("/editor/create")
     public String OpenEditorCreate(){
         return "create_route";
     }
 
-//    @GetMapping("/editor/edit")
-//    public String OpenEditorEdit(Model model){
-//        return "create_route";
-//    }
-//
-//    @RequestMapping(value = "/editor/create", method = RequestMethod.POST)
-//    public String acceptForm(HttpServletRequest request, Model model){
-//        Map<String, String[]> parameterMap = request.getParameterMap();
-//
-//        ArrayList<MapPoint> points = new ArrayList<>(16);
-//
-//        ArrayList<String> messages = new ArrayList<>(16);
-//
-//        parameterMap.forEach((key, value) -> {
-//            if (!key.equals("_csrf")){
-//                String[] keyParts = key.split("_");
-//                if (keyParts.length == 4){
-//                    int index = Integer.parseInt(keyParts[3]);
-//                    if (index >= points.size()) points.add(new MapPoint());
-//                    switch (keyParts[1]){
-//                        case "name" -> points.get(index).setTextRepresent(value[0]);
-//                        case "lat" -> points.get(index).setLatitude(value[0]);
-//                        case "lon" -> points.get(index).setLongitude(value[0]);
-//                    }
-//                }
-//
-//            }
-//            StringBuilder builder = new StringBuilder(key + " -> |");
-//            for (var v : value)
-//                builder.append(v).append("|");
-//            messages.add(builder.toString());
-//        });
-//
-//        model.addAttribute("messages", messages);
-//        model.addAttribute("points", points);
-//
-//        return "temp_route_editor";
-//    }
+    @PostMapping("/editor/create/add")
+    public String addRec(
+            @RequestParam(name = "lon") String lon,
+            @RequestParam(name = "lat") String lat,
+            @RequestParam(name = "name") String name,
+            Model model
+    ){
+        MapPoint point = new MapPoint(lat, lon, name);
+        points.add(point);
 
+        model.addAttribute("points", points);
+        model.addAttribute("texts", Transform.MapPointToYMAPString(points));
+        return "create_route";
+    }
+
+    @PostMapping("/editor/create/fin")
+    public String saveRoute(
+            @AuthenticationPrincipal User user,
+            @RequestParam(name = "name") String name,
+            @RequestParam(name = "short_description") String short_description,
+            @RequestParam(name = "description") String description,
+            Model model
+    ){
+        Route route = new Route(name, short_description, description, user, 0L, null, points, Collections.singleton(RouteCategory.SOLO));
+        repository.saveAndFlush(route);
+
+        model.addAttribute("points", points);
+        return "redirect:/routes";
+    }
 
 }

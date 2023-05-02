@@ -48,21 +48,6 @@ public class AccountController {
         if (!user.getUsername().equals(name))
             user.setUsername(name);
 
-//        if (file != null){
-//            File uploadDir = new File(uploadPath);
-//            if (!uploadDir.exists()) uploadDir.mkdirs();
-//
-//            String fileName = UUID.randomUUID().toString() + "." + file.getOriginalFilename();
-//            user.setPhoto(fileName);
-//            try {
-//                file.transferTo(new File(uploadPath + "/" + fileName));
-//            } catch (IOException e) {
-//                // TODO: 02.05.2023 catch IO
-//                throw new RuntimeException(e);
-//            }
-//
-//        }
-
         repository.save(user);
 
         model.addAttribute("user", user);
