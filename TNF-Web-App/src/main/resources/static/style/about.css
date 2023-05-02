@@ -1,0 +1,11 @@
+main h2{
+    font-size: calc(1.275rem + 0.8vw);
+}
+
+main h4{
+    color: #0A9E07;
+    font-size: calc(0.875rem + 0.7vw);
+}
+main p{
+    font-size: calc(0.675rem + 0.5vw);
+}
