@@ -39,9 +39,26 @@ public class AccountController {
             @AuthenticationPrincipal User user,
             @RequestParam("name") String name,
             @RequestParam("email") String email,
-//            @RequestParam("file") MultipartFile file,
+            @RequestParam("file") MultipartFile file,
             Model model
     ) {
+
+        if (!file.isEmpty()) {
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists())
+                if (!uploadDir.mkdirs())
+                    throw new RuntimeException("Can't create upload dir");
+
+            String uuidName = UUID.randomUUID() + "." + file.getOriginalFilename();
+
+            try {
+                file.transferTo(new File(uploadDir + uuidName));
+            } catch (IOException e) {
+                throw new RuntimeException("Can't transfer file" + e);
+            }
+
+            user.setPhoto(uuidName);
+        }
 
         if (!user.getEmail().equals(email))
             user.setEmail(email);
