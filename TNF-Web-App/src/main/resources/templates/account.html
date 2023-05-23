@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="../static/style/common.css" th:href="@{../static/style/common.css}">
 </head>
 <body>
+<div id="up"></div>
 <header  class="container-fluid shadow p-3 mb-5 bg-body">
     <div class="container">
         <nav class="navbar custom-navbar flex-column flex-sm-row">
@@ -32,21 +33,20 @@
 </header>
 
 <main class="container mt-5">
+    <div class="d-flex profile mb-3">
+        <div class="">
+            <img th:if="${user.getPhoto() == null}" src="../static/img/person.jpg"
+                 class="img-fluid rounded-pill" alt="photo">
+        </div>
+        <div class="flex-grow-1 ms-2"><p class="name mt-3" th:text="${user.getUsername()}">Имя пользователя</p></div>
+        <div class="d-flex align-items-center">
+            <form th:action="@{/logout}" method="post" class="align-items-center">
+                <input class="image align-items-center" type="image" alt="Кнопка «input»" src="../static/img/exit.png"/>
+            </form>
+        </div>
+    </div>
     <div class="row">
         <div class="col-4">
-            <div class="d-flex profil">
-
-                <img th:if="${user.getPhoto() != null}" th:src="'/img/'+${user.getPhoto()}"
-                     class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
-
-                <img th:if="${user.getPhoto() == null}" src="../static/img/person.jpg"
-                     class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
-
-                <p class="name d-flex mx-2 mt-3" th:text="${user.getUsername()}">Имя пользователя</p>
-                <form th:action="@{/logout}" method="post" class="d-flex align-items-center ms-5">
-                    <input class="image " type="image" alt="Кнопка «input»" src="../static/img/exit.png"/>
-                </form>
-            </div>
             <div>
                 <form class="row" method="post" action="/account/edit" enctype="multipart/form-data">
                     <label for="validationServerUsername" class="form-label" th:text="${user.getUsername()}">Имя пользователя</label>
@@ -73,7 +73,28 @@
             <button class="btn close  " type="submit">СМЕНИТЬ ПАРОЛЬ</button>
         </div>
         <div class="col-6">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Избранные маршруты</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Мои маршруты</button>
+                </li>
+            </ul>
 
+            <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">Товарищи! сложившаяся структура организации представляет собой интересный эксперимент проверки новых предложений. Разнообразный и богатый опыт сложившаяся структура организации влечет за собой процесс внедрения и модернизации систем массового участия. Таким образом укрепление и развитие структуры требуют от нас анализа систем массового участия.</div>
+                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">Равным образом сложившаяся структура организации представляет собой интересный эксперимент проверки модели развития. С другой стороны дальнейшее развитие различных форм деятельности требуют от нас анализа соответствующий условий активизации. Товарищи! укрепление и развитие структуры влечет за собой процесс внедрения и модернизации модели развития. Идейные соображения высшего порядка, а также рамки и место обучения кадров играет важную роль в формировании соответствующий условий активизации. Повседневная практика показывает, что начало повседневной работы по формированию позиции представляет собой интересный эксперимент проверки модели развития.</div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                    crossorigin="anonymous">
+                var firstTabEl = document.querySelector('#myTab li:last-child a')
+                var firstTab = new bootstrap.Tab(firstTabEl)
+
+                firstTab.show()
+            </script>
         </div>
     </div>
 </main>
@@ -101,7 +122,7 @@
                     <li><a href="/about">О проекте</a></li>
                 </ul>
                 <p class="mt-5">
-                    <a href="#">Вернуться наверх</a>
+                    <a href="#up">Вернуться наверх</a>
                 </p>
             </div>
         </div>

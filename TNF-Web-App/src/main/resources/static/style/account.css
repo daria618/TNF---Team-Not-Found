@@ -1,6 +1,26 @@
-.profil img{
-    max-height: 62px;
+.profile img{
     max-width: 62px;
+    aspect-ratio: 1/1;
+}
+
+.user {
+    display: flex;
+    align-items: flex-start;
+}
+
+.user__name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    overflow: hidden;
+}
+.name{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.profile form{
+
 }
 main p{
     text-decoration-line: underline;

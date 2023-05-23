@@ -13,19 +13,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;900&display=swap" rel="stylesheet">
 
   <script src="https://api-maps.yandex.ru/2.1/?apikey=a6743776-fded-4335-995e-e61a3768858c&lang=ru_RU" type="text/javascript"></script>
+
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="../static/style/common.css" th:href="@{../static/style/common.css}">
   <link rel="stylesheet" type="text/css" href="../static/style/header_common.css" th:href="@{../static/style/header_common.css}">
   <link rel="stylesheet" type="text/css" href="../static/style/rout_card.css" th:href="@{../static/style/rout_card.css}">
+  <link media="print" rel="stylesheet" href="../static/style/print.css">
+
 </head>
 <body>
+<div id="up"></div>
 <header  class="container-fluid shadow p-3 bg-body">
   <div class="container">
     <nav class="navbar custom-navbar flex-column flex-sm-row">
       <a class="flex-fill text-center nav-link" href="/home">Главная</a>
       <a class="flex-fill text-center nav-link active" aria-current="page" href="/routes">Маршруты</a>
       <a class="flex-fill text-center nav-link" href="/addRoute">Добавить свой маршрут</a>
-      <a class="flex-fill text-center nav-link"  href="/account">Личный кабинет</a>
+      <a class="flex-fill text-center nav-link" href="/account">Личный кабинет</a>
       <a class="flex-fill text-center nav-link" href="/about">О проекте</a>
     </nav>
   </div>
@@ -37,11 +41,22 @@
     <h5 class="card-title align-self-center ms-3" th:text="${route.getName()}">Название маршрута*</h5>
   </div>
 
-  <div class="photo d-flex mb-3">
-    <div class="main_photo col-4">
-    </div>
-    <div class="other_photo col-8 row row-cols-3" style="--bs-gutter-x: 0">
-      <div class="col minor_photo ms-2 mb-1"><img src="../static/img/fon.jpg" alt="Фото"></div>
+  <script>
+    var myModal = new bootstrap.Modal(document.getElementById('minor_photo'), {
+      keyboard: false
+    })
+  </script>
+  <div class="photo d-flex mb-3 border p-1">
+    <figure class="main_photo col-5">
+      <a>
+        <img src="../static/img/temp_main_photo.jpg">
+      </a>
+    </figure>
+    <div class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
+      <figure class="col minor_photo ms-2"><img src="../static/img/temp_ph1.webp" alt="Фото"></figure>
+      <figure class="col minor_photo ms-2"><img src="../static/img/temp_ph2.webp" alt="Фото"></figure>
+
+      <!--      <figure class=""col minor_photo ms-2 mb-1"><img src="../static/img/fon.jpg" alt="Фото"></figure>-->
     </div>
   </div>
 
@@ -102,6 +117,8 @@
     </script>
   </div>
 
+  <a href="#" class="action-print">Распечатать</a>
+
   <div class="reviews mb-4">
     <h5 class="my-2 mx-4" >Отзывы</h5>
 
@@ -160,7 +177,7 @@
           <li><a href="/about">О проекте</a></li>
         </ul>
         <p class="mt-5">
-          <a href="#">Вернуться наверх</a>
+          <a href="#up">Вернуться наверх</a>
         </p>
       </div>
     </div>
