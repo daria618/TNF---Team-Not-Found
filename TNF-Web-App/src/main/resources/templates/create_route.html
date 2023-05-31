@@ -16,47 +16,169 @@
     <script src="../static/script/addInput.js" th:inline="javascript"></script>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=a6743776-fded-4335-995e-e61a3768858c&lang=ru_RU"
             type="text/javascript"></script>
+
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../static/style/create_route.css"
           th:href="@{../static/style/create_route.css}">
     <link rel="stylesheet" type="text/css" href="../static/style/header_common.css"
           th:href="@{../static/style/header_common.css}">
-    <link rel="stylesheet" type="text/css" href="../static/style/common.css" th:href="@{../static/style/common.css}">
+    <link rel="stylesheet" type="text/css" href="../static/style/common.css"
+          th:href="@{../static/style/common.css}">
     </head>
 <body>
 <div id="up"></div>
 <header class="container-fluid shadow p-3 mb-5 bg-body">
     <div class="container">
         <nav class="navbar custom-navbar flex-column flex-sm-row">
-            <a class="flex-fill text-center nav-link" href="/home">Главная</a>
-            <a class="flex-fill text-center nav-link" href="/routes">Маршруты</a>
-            <a class="flex-fill text-center nav-link active" href="/addRoute">Добавить свой маршрут</a>
-            <a class="flex-fill text-center nav-link" aria-current="page" href="/account">Личный кабинет</a>
-            <a class="flex-fill text-center nav-link" href="/about">О проекте</a>
+            <a class="p-2 flex-fill text-center nav-link" href="/home">Главная</a>
+            <a class="p-2 flex-fill text-center nav-link" href="/routes">Маршруты</a>
+            <a class="p-2 flex-fill text-center nav-link active" href="/addRoute">Добавить свой маршрут</a>
+            <a class="p-2 flex-fill text-center nav-link" aria-current="page" href="/account">Личный кабинет</a>
+            <a class="p-2 flex-fill text-center nav-link" href="/about">О проекте</a>
         </nav>
     </div>
 </header>
 
 <main class="container mb-4">
-    <div class="container row">
-        <div class="col-6">
+    <script>
+        $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
+            $(this).closest("li").toggleClass("active", this.checked);
+        });
+
+        $(document).on('click', '.allow-focus', function (e) {
+            e.stopPropagation();
+        });
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+
+    <div class="row" style="--bs-gutter-x: 0;">
+        <div class="col-6 pe-3">
             <form action="/editor/create/fin" th:action="@{/editor/create/fin}" method="post">
                 <div>
-                    <input type="text" placeholder="Название маршрута..." name="name" id="name"/>
-                    <textarea name="short_description" placeholder="Кратко опишите свой маршрут..."></textarea>
-                    <textarea name="description" placeholder="Опишите свой маршрут подробнее..."></textarea>
-                    <button type="submit">+</button>
+                    <input class="mb-3" type="text" placeholder="Название маршрута..." name="name" id="name"/>
+                    <textarea class="p-4 mb-3" name="short_description" placeholder="Кратко опишите свой маршрут..." style="height: 100px;"></textarea>
+                    <textarea class="p-4 mb-3" name="description" placeholder="Опишите свой маршрут подробнее..." style="min-height: 160px;"></textarea>
+                    <div class="dropdown">
+                        <button class="dropdown-toggle p-2" type="button"
+                                id="dropdownMenu1" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">
+                            Кому подойдет маршрут?
+                        </button>
+                        <ul class="dropdown-menu allow-focus form-check" aria-labelledby="dropdownMenu1">
+                            <li class="dropdown-item">
+                                <input class="form-check-input" type="checkbox" value="" id="filterCheck_1">
+                                <label class="form-check-label" for="filterCheck_1"> Искателям приключений</label>
+                            </li>
+                            <li class="dropdown-item">
+                                <input class="form-check-input" type="checkbox" value="" id="filterCheck_2">
+                                <label class="form-check-label" for="filterCheck_2">Любителям истории</label>
+                            </li>
+                            <li class="dropdown-item">
+                                <input class="form-check-input" type="checkbox" value="" id="filterCheck_3">
+                                <label class="form-check-label" for="filterCheck_3">Одиноким путешественникам</label>
+                            </li>
+                            <li class="dropdown-item">
+                                <input class="form-check-input" type="checkbox" value="" id="filterCheck_4">
+                                <label class="form-check-label" for="filterCheck_4">Ищущим романтический отдых</label>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </form>
-            <div class="mt-sm-5" style="width: 100%;">
-                <form method="post" action="/editor/create/add" th:action="@{/editor/create/add}">
-                    <input type="text" style="width: 49%; height: 60px" placeholder="lat" name="lat">
-                    <input type="text" style="width: 49%; height: 60px" placeholder="lon" name="lon">
-                    <input type="text" style="width: 49%; height: 60px" placeholder="name" name="name">
-                    <button type="button" style="width: 49%; height: 60px">select</button>
-                    <button type="submit" style="width: 98.5%; height: 60px">Add Point</button>
-                </form>
-            </div>
+            <div class="points mt-3 ">
+                <div class="mb-5 point">
+                    <form method="post" action="/editor/create/add" th:action="@{/editor/create/add}">
+                        <div class="choice p-3 mb-2">
+                            <div class="d-flex justify-content-end" data-bs-theme="dark">
+                                <button type="button" class="btn-close" disabled aria-label="Закрыть"></button>
+                            </div>
+                            <p>Выберите способ указания месторасположение точки:</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" >
+                                    Указать адрес
+                                </label>
+                                <div>
+                                    <input type="text"  placeholder="Введите адрес" name="name">
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label">
+                                    Указать координаты
+                                </label>
+                                <div class="cooridnates row my-2">
+                                    <div class="col">
+                                        <input  type="text" placeholder="Широта" name="lat">
+                                    </div>
+                                    <div class="col">
+                                        <input class="me-2" type="text" placeholder="Долгота" name="lon">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label">
+                                    Указать точку на карте
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="d-flex">
+                        <button class="add me-4">+</button>
+                        <h5>Добавить точку</h5>
+                    </div>
+                </div>
+                <!--Шаблон точек
+
+                    <div class="mb-5 point">
+                    <form method="post" action="/editor/create/add" th:action="@{/editor/create/add}">
+                        <div class="choice p-3 mb-2">
+                            <div class="d-flex justify-content-end" data-bs-theme="dark">
+                                <button type="button" class="btn-close" aria-label="Закрыть"></button>
+                            </div>
+                            <p>Выберите способ указания месторасположение точки:</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" >
+                                    Указать адрес
+                                </label>
+                                <div>
+                                    <input type="text"  placeholder="Введите адрес" name="name">
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label">
+                                    Указать координаты
+                                </label>
+                                <div class="cooridnates row my-2">
+                                    <div class="col">
+                                        <input  type="text" placeholder="Широта" name="lat">
+                                    </div>
+                                    <div class="col">
+                                        <input class="me-2" type="text" placeholder="Долгота" name="lon">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label">
+                                    Указать точку на карте
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="d-flex">
+                        <button class="add me-4">+</button>
+                        <h5>Добавить точку</h5>
+                    </div>
+                </div>
+
+                -->
+                </div>
 
             <div th:if="${points}" th:each="point : ${points}">
                 <span th:text="${point.getLatitude()}"></span>
@@ -65,7 +187,20 @@
             </div>
         </div>
 
-        <div class="map col-6" id="map" style="background-color: #666666"></div>
+        <div class="col-6">
+            <div class="mb-5">
+                <label for="MainPhoto" class="form-label mt-4">Главная фотография маршрута</label>
+                <input type="file" name="file" class="form" id="MainPhoto" placeholder="Фото" required>
+                <label for="OfterPhoto" class="form-label mt-4">Остальные фотографии маршрута
+                    <h6>*Можете выбрать несколько фотографий</h6>
+                </label>
+                <input type="file" multiple name="file" class="form" id="OfterPhoto" placeholder="Фото" required>
+
+            </div>
+            <div class="map" id="map" style="background-color: #666666">
+
+            </div>
+        </div>
         <script type="text/javascript" th:inline="javascript">
                     ymaps.ready(init);
                     function init(){
@@ -92,6 +227,7 @@
                     }
                 </script>
     </div>
+
 </main>
 
 <footer class="container-fluid p-0" style="background-color: #171A1A;">
