@@ -37,21 +37,15 @@
     </div>
 </header>
 
-<main class="container-fluid mb-4">
-    <div class="container d-flex">
-        <div>
+<main class="container mb-4">
+    <div class="container row">
+        <div class="col-6">
             <form action="/editor/create/fin" th:action="@{/editor/create/fin}" method="post">
                 <div>
-                    <input type="text" placeholder="название" name="name" id="name"/>
-                    <div>
-                        Краткое описание
-                        <textarea name="short_description" style="width: 100%; height: 100px"></textarea>
-                    </div>
-                    <div>
-                        Подробное описание
-                        <textarea name="description" style="width: 100%; height: 100px"></textarea>
-                    </div>
-                    <button type="submit" style="width: 100%; height: 60px">Create</button>
+                    <input type="text" placeholder="Название маршрута..." name="name" id="name"/>
+                    <textarea name="short_description" placeholder="Кратко опишите свой маршрут..."></textarea>
+                    <textarea name="description" placeholder="Опишите свой маршрут подробнее..."></textarea>
+                    <button type="submit">+</button>
                 </div>
             </form>
             <div class="mt-sm-5" style="width: 100%;">
@@ -71,8 +65,8 @@
             </div>
         </div>
 
-        <div class="map" id="map" style="background-color: #666666"></div>
-                <script type="text/javascript" th:inline="javascript">
+        <div class="map col-6" id="map" style="background-color: #666666"></div>
+        <script type="text/javascript" th:inline="javascript">
                     ymaps.ready(init);
                     function init(){
                         var myMap = new ymaps.Map("map", {

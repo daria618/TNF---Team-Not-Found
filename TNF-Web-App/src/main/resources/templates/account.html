@@ -32,7 +32,7 @@
     </div>
 </header>
 
-<main class="container mt-5">
+<main class="container my-5 ">
     <div class="d-flex profile mb-3">
         <div class="">
             <img th:if="${user.getPhoto() == null}" src="../static/img/person.jpg"
@@ -72,7 +72,7 @@
             </div>
             <button class="btn close  " type="submit">СМЕНИТЬ ПАРОЛЬ</button>
         </div>
-        <div class="col-6">
+        <div class="col-8">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Избранные маршруты</button>
@@ -83,8 +83,40 @@
             </ul>
 
             <div class="tab-content">
-                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">Товарищи! сложившаяся структура организации представляет собой интересный эксперимент проверки новых предложений. Разнообразный и богатый опыт сложившаяся структура организации влечет за собой процесс внедрения и модернизации систем массового участия. Таким образом укрепление и развитие структуры требуют от нас анализа систем массового участия.</div>
-                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">Равным образом сложившаяся структура организации представляет собой интересный эксперимент проверки модели развития. С другой стороны дальнейшее развитие различных форм деятельности требуют от нас анализа соответствующий условий активизации. Товарищи! укрепление и развитие структуры влечет за собой процесс внедрения и модернизации модели развития. Идейные соображения высшего порядка, а также рамки и место обучения кадров играет важную роль в формировании соответствующий условий активизации. Повседневная практика показывает, что начало повседневной работы по формированию позиции представляет собой интересный эксперимент проверки модели развития.</div>
+                <div class="tab-pane active routestab" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="selected-routes">
+                        <div>
+                            <div class="d-flex mt-3">
+                                <vr class="vr"></vr>
+                                <h6 class="ms-2"><a href="">Название маршрута*</a></h6>
+                            </div>
+                            <div class="card mt-2">
+                                <figure class="img-wrap" >
+                                    <img src="../static/img/temp_main_photo.jpg" class="img-responsive">
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane routestab" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="my-routes">
+                        <div>
+                            <div class="d-flex mt-3">
+                                <vr class="vr"></vr>
+                                <h6 class="ms-2"><a href="">Название маршрута*</a></h6>
+                            </div>
+                            <div class="card mt-2">
+                                <figure class="img-wrap" >
+                                    <img src="../static/img/temp_main_photo.jpg" class="img-responsive">
+                                </figure>
+                            </div>
+                            <div class="d-flex flex-row mt-2 mb-4">
+                                <a href="" class="me-4 px-4 py-1 edit">Отредактировать</a>
+                                <a href="" class="me-4 px-4 py-1 delete">Удалить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
