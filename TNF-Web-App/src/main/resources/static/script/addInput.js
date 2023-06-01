@@ -4,8 +4,6 @@ createMap()
 
 let points = []
 
-let myPlacemark
-
 let myMap
 
 function addNew() {
@@ -21,7 +19,7 @@ function addNew() {
         "                        <div class='d-flex justify-content-end' data-bs-theme='dark'>\n" +
         "                            <button type='button' class='btn-close' onclick='remove(this.parentNode.parentNode.parentNode.parentNode)' aria-label='Закрыть'></button>\n" +
         "                        </div>\n" +
-        "                        <p>Выберите способ указания месторасположения точки:</p>\n" +
+        "                        <p>Выберите способ указания точки:</p>\n" +
         "                        <div class='p-2'>\n" +
         "                            <div id='buttons_" + ind + "' class='cooridnates row buttonSet' style='--bs-gutter-x: 0'>\n" +
         "                                    <input type='button' onclick='setTypeCoord(this.parentNode)' name='coord' class='col mx-2 px-2 py-1' value='Координаты'>\n" +
@@ -46,6 +44,12 @@ function submitPoint(parentNode){
 
 function toPoint(node){
     let len = node.children.length
+    if (coords != null){
+        node.children.item(0).value = coords[0]
+        node.children.item(1).value = coords[1]
+        coords = null
+    }
+
     if (len === 2)
         return [parseFloat(node.children.item(0).value), parseFloat(node.children.item(1).value)]
     else if (len === 1)
@@ -71,8 +75,8 @@ function setTypeCoord(parentNode) {
     const div = document.createElement("div")
     div.id = "inputs"
     div.innerHTML = "<div class='cooridnates row mx-3 my-3' style='--bs-gutter-x: 0'>\n" +
-        "               <input class='col me-2' type='text' placeholder='Широта' name='lat'>\n" +
-        "               <input class='col ' type='text' placeholder='Долгота' name='lon'>\n" +
+        "               <input class='col me-2' type='text' placeholder='Широта' name='"+parentNode.id+"_coord_lat'>\n" +
+        "               <input class='col ' type='text' placeholder='Долгота' name='"+parentNode.id+"_coord_lon'>\n" +
         "           </div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
     parentNode.appendChild(div)
@@ -93,7 +97,7 @@ function setTypeName(parentNode) {
     }
     const div = document.createElement("div")
     div.id = "inputs"
-    div.innerHTML = "<div><input type='text' class='my-3 mx-3' placeholder='Введите адрес' name='name'></div>" +
+    div.innerHTML = "<div><input type='text' class='my-3 mx-3' placeholder='Введите адрес' name='"+parentNode.id+"_adress'></div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
     parentNode.appendChild(div)
 }
@@ -112,8 +116,8 @@ function setTypeSelect(parentNode) {
     const div = document.createElement("div")
     div.id = "inputs"
     div.innerHTML = "<div class='cooridnates row mx-3 my-3' style='--bs-gutter-x: 0'>\n" +
-        "               <input disabled class='col me-2' type='text' placeholder='Широта' name='lat'>\n" +
-        "               <input disabled class='col ' type='text' placeholder='Долгота' name='lon'>\n" +
+        "               <input class='col me-2' type='text' placeholder='Широта' name='"+parentNode.id+"_coord_lat'>\n" +
+        "               <input class='col ' type='text' placeholder='Долгота' name='"+parentNode.id+"_coord_lon'>\n" +
         "           </div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
     parentNode.appendChild(div)
@@ -149,7 +153,6 @@ function createMap(){
     });
 }
 function updateMap(){
-    console.log("AAAA")
     points.forEach(item => console.log(item));
     if (points.length > 1){
         ymaps.route(points).then(function (route) {
@@ -158,26 +161,19 @@ function updateMap(){
     }
 }
 
+let coords
+
 function choosePoint(node) {
-    myPlacemark = new ymaps.Placemark([55.76, 37.64])
+    let myPlacemark = new ymaps.Placemark([55.76, 37.64])
     myMap.geoObjects.add(myPlacemark);
 
     myMap.behaviors.disable('click');
-    // Добавляем обработчик клика на карту
     myMap.events.add('click', function(e) {
-        // Получаем координаты точки, на которую кликнули
-        var coords = e.get('coords');
+        coords = e.get('coords');
 
-        // Устанавливаем новые координаты для метки
         myPlacemark.geometry.setCoordinates(coords);
-
-        node.children.item(0).value = coords[0]
-        node.children.item(1).value = coords[1]
-
-        // Выводим координаты точки в консоль
         console.log('выбор точки: ' + coords);
 
-        // Удаляем обработчик клика и включаем возможность клика по карте
         myMap.events.remove('click');
         myMap.behaviors.enable('click');
     });

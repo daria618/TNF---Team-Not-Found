@@ -54,45 +54,46 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
 
-    <form id="route_configurator" action="/editor/create/fin" th:action="@{/editor/create/fin}" method="post">
+    <form name="fullForm" action="/editor/create/fin" th:action="@{/editor/create/fin}" method="post">
         <div class="row" style="--bs-gutter-x: 0;">
-            <div class="col-6 pe-5">
-                <div>
-                    <input class="mb-3" type="text" placeholder="Название маршрута..." name="name" id="name"/>
-                    <textarea class="p-4 mb-3" name="short_description" placeholder="Кратко опишите свой маршрут..."
-                              style="height: 100px;"></textarea>
-                    <textarea class="p-4 mb-3" name="description" placeholder="Опишите свой маршрут подробнее..."
-                              style="min-height: 160px;"></textarea>
-                    <div class="dropdown mb-5">
-                        <button class="dropdown-toggle p-2" type="button"
-                                id="dropdownMenu1" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="true">
-                            Кому подойдет маршрут?
-                        </button>
-                        <ul class="dropdown-menu allow-focus form-check" aria-labelledby="dropdownMenu1">
-                            <li class="dropdown-item">
-                                <input class="form-check-input" type="checkbox" value="" id="filterCheck_1">
-                                <label class="form-check-label" for="filterCheck_1"> Искателям приключений</label>
-                            </li>
-                            <li class="dropdown-item">
-                                <input class="form-check-input" type="checkbox" value="" id="filterCheck_2">
-                                <label class="form-check-label" for="filterCheck_2">Любителям истории</label>
-                            </li>
-                            <li class="dropdown-item">
-                                <input class="form-check-input" type="checkbox" value="" id="filterCheck_3">
-                                <label class="form-check-label" for="filterCheck_3">Одиноким путешественникам</label>
-                            </li>
-                            <li class="dropdown-item">
-                                <input class="form-check-input" type="checkbox" value="" id="filterCheck_4">
-                                <label class="form-check-label" for="filterCheck_4">Ищущим романтический отдых</label>
-                            </li>
-                        </ul>
+            <div  class="col-6 pe-5">
+                <div id="route_configurator">
+                    <div>
+                        <input class="mb-3" type="text" placeholder="Название маршрута..." name="route_name" id="name"/>
+                        <textarea class="p-4 mb-3" name="desc_short" placeholder="Кратко опишите свой маршрут..."
+                                  style="height: 100px;"></textarea>
+                        <textarea class="p-4 mb-3" name="desc_long" placeholder="Опишите свой маршрут подробнее..."
+                                  style="min-height: 160px;"></textarea>
+                        <div class="dropdown mb-5">
+                            <button class="dropdown-toggle p-2" type="button"
+                                    id="dropdownMenu1" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="true">
+                                Кому подойдет маршрут?
+                            </button>
+                            <ul class="dropdown-menu allow-focus form-check" aria-labelledby="dropdownMenu1">
+                                <li class="dropdown-item">
+                                    <input class="form-check-input" type="checkbox" value="" id="filterCheck_1">
+                                    <label class="form-check-label" for="filterCheck_1"> Искателям приключений</label>
+                                </li>
+                                <li class="dropdown-item">
+                                    <input class="form-check-input" type="checkbox" value="" id="filterCheck_2">
+                                    <label class="form-check-label" for="filterCheck_2">Любителям истории</label>
+                                </li>
+                                <li class="dropdown-item">
+                                    <input class="form-check-input" type="checkbox" value="" id="filterCheck_3">
+                                    <label class="form-check-label" for="filterCheck_3">Одиноким путешественникам</label>
+                                </li>
+                                <li class="dropdown-item">
+                                    <input class="form-check-input" type="checkbox" value="" id="filterCheck_4">
+                                    <label class="form-check-label" for="filterCheck_4">Ищущим романтический отдых</label>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-
                 <div class="points mt-3 " id="pointsDiv">
                     <div class="d-flex">
-                        <button onclick="addNew()" class="add me-4">+</button>
+                        <input type="button" onclick="addNew()" class="add me-4" value="+">
                         <h5>Добавить точку</h5>
                     </div>
                 </div>
@@ -102,11 +103,11 @@
                 <div class="row mb-5 mt-4">
                     <div class="col">
                         <label for="MainPhoto" class="form-label ">Главная фотография маршрута</label>
-                        <input type="file" name="file" class="form" id="MainPhoto" placeholder="Фото" required>
+                        <input type="file" name="img_main" class="form" id="MainPhoto" placeholder="Фото">
                         <label for="OfterPhoto" class="form-label mt-4">Остальные фотографии маршрута
                             <h6>*Можете выбрать несколько фотографий</h6>
                         </label>
-                        <input type="file" multiple name="file" class="form" id="OfterPhoto" placeholder="Фото" required>
+                        <input type="file" multiple name="img_other" class="form" id="OfterPhoto" placeholder="Фото">
                     </div>
                     <div class="col d-flex justify-content-end align-items-start">
                         <input type="submit" class="py-2">

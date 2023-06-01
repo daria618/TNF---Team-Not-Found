@@ -96,10 +96,11 @@ public class DBInit implements CommandLineRunner {
     public Route createTestRoute_1(User author) {
         return new Route(
                 "Тестовый маршрут №1, названия",
-                "АааааАААААааААааАааааАААААааААааАааааАААААааААаа_ТЕСТОВЫЙ_1",
-                "Это типа длинное описание 1",
+                "Идейные соображения высшего порядка, а также новая модель организационной деятельности в значительной",
+                "Это длинное описание 1",
                 author,
                 0,
+                null,
                 null,
                 new LinkedList<>() {{
                     add(new MapPoint(null, null, "улица Челюскинцев, 33А, Екатеринбург"));
@@ -113,10 +114,11 @@ public class DBInit implements CommandLineRunner {
     public Route createTestRoute_2(User author) {
         return new Route(
                 "Тестовый маршрут №2, координаты",
-                "бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-ТЕСТОВЫЙ_2",
-                "Это типа длинное описание 2",
+                " Товарищи! постоянный количественный рост и сфера",
+                "Это длинное описание 2",
                 author,
                 15,
+                null,
                 null,
                 new LinkedList<>() {{
                     add(new MapPoint("56.838261", "60.585636", null));
@@ -130,10 +132,11 @@ public class DBInit implements CommandLineRunner {
     public Route createTestRoute_3(User author) {
         return new Route(
                 "Тестовый маршрут №3, координаты",
-                "бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-бла-ТЕСТОВЫЙ_3",
-                "Это типа длинное описание 3",
+                "Задача организации, в особенности же новая модель организационной деятельности требуют от нас анализа соответствующий условий активизации",
+                "Это длинное описание 3",
                 author,
                 30,
+                null,
                 null,
                 new LinkedList<>() {{
                     add(new MapPoint("56.848356", "60.601967", null));
@@ -148,9 +151,10 @@ public class DBInit implements CommandLineRunner {
         return new Route(
                 "Тестовый маршрут №4 микс",
                 "Это описание тестового маршрута с точками заданными разными методами",
-                "Это типа длинное описание 4",
+                "Это длинное описание 4",
                 author,
                 30,
+                null,
                 null,
                 new LinkedList<>() {{
                     add(new MapPoint("56.848356", "60.601967", null));
