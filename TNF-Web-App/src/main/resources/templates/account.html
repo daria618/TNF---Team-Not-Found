@@ -25,7 +25,7 @@
         <nav class="navbar custom-navbar flex-column flex-sm-row">
             <a class="flex-fill text-center nav-link" href="/home">Главная</a>
             <a class="flex-fill text-center nav-link" href="/routes">Маршруты</a>
-            <a class="flex-fill text-center nav-link" href="/addRoute">Добавить свой маршрут</a>
+            <a class="flex-fill text-center nav-link" href="/editor/create">Добавить свой маршрут</a>
             <a class="flex-fill text-center nav-link active" aria-current="page" href="/account">Личный кабинет</a>
             <a class="flex-fill text-center nav-link" href="/about">О проекте</a>
         </nav>
@@ -36,6 +36,8 @@
     <div class="d-flex profile mb-3">
         <div class="">
             <img th:if="${user.getPhoto() == null}" src="../static/img/person.jpg"
+                 class="img-fluid rounded-pill" alt="photo">
+            <img th:if="${user.getPhoto() != null}" th:src="'/img/' + ${user.getPhoto()}"
                  class="img-fluid rounded-pill" alt="photo">
         </div>
         <div class="flex-grow-1 ms-2"><p class="name mt-3" th:text="${user.getUsername()}">Имя пользователя</p></div>
@@ -48,29 +50,38 @@
     <div class="row">
         <div class="col-4">
             <div>
-                <form class="row" method="post" action="/account/edit" enctype="multipart/form-data">
-                    <label for="validationServerUsername" class="form-label" th:text="${user.getUsername()}">Имя пользователя</label>
-                    <input type="text" class="form" id="validationServerUsername" placeholder="Имя пользователя"
-                           required>
-
-                    <label for="validationServerEmail" class="form-label mt-4" th:text="${user.getEmail()}">Адрес эл. почты</label>
-                    <input type="email" class="form" id="validationServerEmail" placeholder="Почта" required>
-
+                <!--Форма загрузки изображения-->
+                <form method="post" action="/account/changeImage" enctype="multipart/form-data">
                     <label for="validationServerImg" class="form-label mt-4">Фото пользователя</label>
-                    <input type="file" name="file" class="form" id="validationServerImg" placeholder="Фото" required>
+                    <input type="file" name="imageFile" class="form" id="validationServerImg" placeholder="Фото" required>
+                    <div th:if="${imgMsg}"><h5 th:text="${imgMsg}"></h5></div>
+                    <button class="btn close" type="submit">Сохранить фото</button>
+<!--                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />-->
+                </form>
 
-                    <button class="btn close" type="submit">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+                <!--Форма изменения общих данных-->
+                <form class="row" method="post" action="/account/changeData">
+                    <label for="validationServerUsername" class="form-label" th:text="'Текущее имя пользователя: ' + ${user.getUsername()}">Имя пользователя</label>
+                    <input type="text" name="name" class="form" id="validationServerUsername" placeholder="Имя пользователя">
+
+                    <label for="validationServerEmail" class="form-label mt-4" th:text="'Дейсвующая электронная почта: ' + ${user.getEmail()}">Адрес эл. почты</label>
+                    <input type="email" name="email" class="form" id="validationServerEmail" placeholder="Почта">
+
+                    <div th:if="${dataMsg}"><h5 th:text="${dataMsg}"></h5></div>
+                    <button class="btn close" type="submit">Сохранить изменения</button>
                 </form>
             </div>
             <div class="mt-4">
                 <h4>Изменить пароль</h4>
-                <form class="row">
-                    <input type="password" class="form" placeholder="Введите старый пароль..." required>
-                    <input type="password" class="form mt-4" placeholder="Введите новый пароль..." required>
-                    <input type="password" class="form mt-4" placeholder="Введите новый пароль еще раз..." required>
+                <!--Форма смены пароля-->
+                <form action="/account/changePwd" method="post" class="row">
+                    <input name="old" type="password" class="form" placeholder="Введите старый пароль..." required>
+                    <input name="new" type="password" class="form mt-4" placeholder="Введите новый пароль..." required>
+                    <input name="confirm" type="password" class="form mt-4" placeholder="Введите новый пароль еще раз..." required>
+                    <div th:if="${pwdMsg}"><h5 th:text="${pwdMsg}"></h5></div>
+                    <button class="btn close  " type="submit">СМЕНИТЬ ПАРОЛЬ</button>
                 </form>
             </div>
-            <button class="btn close  " type="submit">СМЕНИТЬ ПАРОЛЬ</button>
         </div>
         <div class="col-8">
             <ul class="nav nav-tabs" id="myTab" role="tablist">

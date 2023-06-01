@@ -23,6 +23,26 @@ input[type=text] {
     border: 1px solid #cdcdcd;
     box-sizing: border-box;
 }
+input[type=button]{
+    color: #FFFFFF;
+    border: none;
+    background-color: #cdcdcd;
+}
+input[type=button]:hover{
+    color: #FFFFFF;
+    border: none;
+    background-color: #0A9E07;
+}
+input[type=button].active, input[type=submit]:hover{
+    background-color: #0A7C07;
+}
+input[type=submit]{
+    width: 60%;
+    color: #FFFFFF;
+    border: none;
+    background-color: #0A9E07;
+}
+
 h6{
     font-size: calc(0.575rem + 0.2vw);
 }

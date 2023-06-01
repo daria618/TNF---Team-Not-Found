@@ -31,6 +31,7 @@ public class DBInit implements CommandLineRunner {
             add(createTestUser());
             add(createAnotherTestUser());
             add(createAdmin());
+            add(createFastLogInUser());
         }};
 
         ArrayList<Route> routes = new ArrayList<>() {{
@@ -77,6 +78,17 @@ public class DBInit implements CommandLineRunner {
                 "admin@email.com",
                 true,
                 Collections.singleton(Role.ADMIN),
+                null
+        );
+    }
+
+    private User createFastLogInUser() {
+        return new User(
+                "n",
+                "p",
+                "emailAdress",
+                true,
+                Collections.singleton(Role.USER),
                 null
         );
     }

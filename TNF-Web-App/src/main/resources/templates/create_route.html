@@ -13,9 +13,10 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;600;900&display=swap" rel="stylesheet">
 
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=a6743776-fded-4335-995e-e61a3768858c&lang=ru_RU" type="text/javascript"></script>
+    <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
     <script src="../static/script/addInput.js" th:inline="javascript"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=a6743776-fded-4335-995e-e61a3768858c&lang=ru_RU"
-            type="text/javascript"></script>
+
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../static/style/create_route.css"
@@ -24,7 +25,7 @@
           th:href="@{../static/style/header_common.css}">
     <link rel="stylesheet" type="text/css" href="../static/style/common.css"
           th:href="@{../static/style/common.css}">
-    </head>
+</head>
 <body>
 <div id="up"></div>
 <header class="container-fluid shadow p-3 mb-5 bg-body">
@@ -41,7 +42,7 @@
 
 <main class="container mb-4">
     <script>
-        $(".checkbox-menu").on("change", "input[type='checkbox']", function() {
+        $(".checkbox-menu").on("change", "input[type='checkbox']", function () {
             $(this).closest("li").toggleClass("active", this.checked);
         });
 
@@ -53,14 +54,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
 
-    <div class="row" style="--bs-gutter-x: 0;">
-        <div class="col-6 pe-5">
-            <form action="/editor/create/fin" th:action="@{/editor/create/fin}" method="post">
+    <form id="route_configurator" action="/editor/create/fin" th:action="@{/editor/create/fin}" method="post">
+        <div class="row" style="--bs-gutter-x: 0;">
+            <div class="col-6 pe-5">
                 <div>
                     <input class="mb-3" type="text" placeholder="Название маршрута..." name="name" id="name"/>
-                    <textarea class="p-4 mb-3" name="short_description" placeholder="Кратко опишите свой маршрут..." style="height: 100px;"></textarea>
-                    <textarea class="p-4 mb-3" name="description" placeholder="Опишите свой маршрут подробнее..." style="min-height: 160px;"></textarea>
-                    <div class="dropdown">
+                    <textarea class="p-4 mb-3" name="short_description" placeholder="Кратко опишите свой маршрут..."
+                              style="height: 100px;"></textarea>
+                    <textarea class="p-4 mb-3" name="description" placeholder="Опишите свой маршрут подробнее..."
+                              style="min-height: 160px;"></textarea>
+                    <div class="dropdown mb-5">
                         <button class="dropdown-toggle p-2" type="button"
                                 id="dropdownMenu1" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="true">
@@ -86,147 +89,33 @@
                         </ul>
                     </div>
                 </div>
-            </form>
-            <div class="points mt-3 ">
-                <div class="mb-5 point">
-                    <form method="post" action="/editor/create/add" th:action="@{/editor/create/add}">
-                        <div class="choice p-3 mb-2">
-                            <div class="d-flex justify-content-end" data-bs-theme="dark">
-                                <button type="button" class="btn-close" disabled aria-label="Закрыть"></button>
-                            </div>
-                            <p>Выберите способ указания месторасположение точки:</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault">
-                                <label class="form-check-label" >
-                                    Указать адрес
-                                </label>
-                                <div>
-                                    <input type="text"  placeholder="Введите адрес" name="name">
-                                </div>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault">
-                                <label class="form-check-label">
-                                    Указать координаты
-                                </label>
-                                <div class="cooridnates row my-2">
-                                    <div class="col">
-                                        <input  type="text" placeholder="Широта" name="lat">
-                                    </div>
-                                    <div class="col">
-                                        <input class="me-2" type="text" placeholder="Долгота" name="lon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault">
-                                <label class="form-check-label">
-                                    Указать точку на карте
-                                </label>
-                            </div>
-                        </div>
-                    </form>
+
+                <div class="points mt-3 " id="pointsDiv">
                     <div class="d-flex">
-                        <button class="add me-4">+</button>
+                        <button onclick="addNew()" class="add me-4">+</button>
                         <h5>Добавить точку</h5>
                     </div>
                 </div>
-                <!--Шаблон точек
+            </div>
 
-                    <div class="mb-5 point">
-                    <form method="post" action="/editor/create/add" th:action="@{/editor/create/add}">
-                        <div class="choice p-3 mb-2">
-                            <div class="d-flex justify-content-end" data-bs-theme="dark">
-                                <button type="button" class="btn-close" aria-label="Закрыть"></button>
-                            </div>
-                            <p>Выберите способ указания месторасположение точки:</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault">
-                                <label class="form-check-label" >
-                                    Указать адрес
-                                </label>
-                                <div>
-                                    <input type="text"  placeholder="Введите адрес" name="name">
-                                </div>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault">
-                                <label class="form-check-label">
-                                    Указать координаты
-                                </label>
-                                <div class="cooridnates row my-2">
-                                    <div class="col">
-                                        <input  type="text" placeholder="Широта" name="lat">
-                                    </div>
-                                    <div class="col">
-                                        <input class="me-2" type="text" placeholder="Долгота" name="lon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault">
-                                <label class="form-check-label">
-                                    Указать точку на карте
-                                </label>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="d-flex">
-                        <button class="add me-4">+</button>
-                        <h5>Добавить точку</h5>
+            <div class="col-6 ">
+                <div class="row mb-5 mt-4">
+                    <div class="col">
+                        <label for="MainPhoto" class="form-label ">Главная фотография маршрута</label>
+                        <input type="file" name="file" class="form" id="MainPhoto" placeholder="Фото" required>
+                        <label for="OfterPhoto" class="form-label mt-4">Остальные фотографии маршрута
+                            <h6>*Можете выбрать несколько фотографий</h6>
+                        </label>
+                        <input type="file" multiple name="file" class="form" id="OfterPhoto" placeholder="Фото" required>
+                    </div>
+                    <div class="col d-flex justify-content-end align-items-start">
+                        <input type="submit" class="py-2">
                     </div>
                 </div>
-
-                -->
-                </div>
-
-            <div th:if="${points}" th:each="point : ${points}">
-                <span th:text="${point.getLatitude()}"></span>
-                <span th:text="${point.getLongitude()}"></span>
-                <span th:text="${point.getTextRepresent()}"></span>
+                <div class="map" id="map" style="background-color: #666666"></div>
             </div>
         </div>
-
-        <div class="col-6">
-            <div class="mb-5">
-                <label for="MainPhoto" class="form-label mt-4">Главная фотография маршрута</label>
-                <input type="file" name="file" class="form" id="MainPhoto" placeholder="Фото" required>
-                <label for="OfterPhoto" class="form-label mt-4">Остальные фотографии маршрута
-                    <h6>*Можете выбрать несколько фотографий</h6>
-                </label>
-                <input type="file" multiple name="file" class="form" id="OfterPhoto" placeholder="Фото" required>
-
-            </div>
-            <div class="map" id="map" style="background-color: #666666">
-
-            </div>
-        </div>
-        <script type="text/javascript" th:inline="javascript">
-                    ymaps.ready(init);
-                    function init(){
-                        var myMap = new ymaps.Map("map", {
-                            center: [56.844376, 60.609048],
-                            zoom: 12
-                        });
-
-                        const jsList = [];
-                        [[${texts}]].forEach(function(item) {
-                            console.log(item)
-                            var splited = item.split('|');
-                            if (splited.length === 1) jsList.push(splited[0]);
-                            else jsList.push([parseFloat(splited[0]), parseFloat(splited[1])])
-                        });
-
-                        jsList.forEach(item => console.log(item));
-
-                        ymaps.route(jsList).then(function (route) {
-                            myMap.geoObjects.add(route);
-                        }, function (error) {
-                            alert("Возникла ошибка: " + error.message);
-                        });
-                    }
-                </script>
-    </div>
+    </form>
 
 </main>
 

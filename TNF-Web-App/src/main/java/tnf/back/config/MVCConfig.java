@@ -1,6 +1,7 @@
 package tnf.back.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -16,8 +17,8 @@ public class MVCConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("home");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/account").setViewName("account");
-
         registry.addViewController("/routes").setViewName("routes");
+        registry.addViewController("/about").setViewName("about");
     }
 
     @Override

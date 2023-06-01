@@ -1,6 +1,6 @@
 package tnf.back.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,11 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import tnf.back.service.UserService;
 
-import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.Arrays;
 
 @Configuration
@@ -36,8 +35,8 @@ public class WebSecurityConfig {
                                 "/home",
                                 "/registration",
                                 "/static/**",
-                                "/routes/**"
-//                                "/routes",
+                                "/routes/**",
+                                "/about"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -45,7 +44,8 @@ public class WebSecurityConfig {
                         .loginPage("/login")
                         .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll);
+                .logout(LogoutConfigurer::permitAll)
+                .csrf().disable();// TODO: 31.05.2023 Вернуть CSRF
         return http.build();
     }
 
