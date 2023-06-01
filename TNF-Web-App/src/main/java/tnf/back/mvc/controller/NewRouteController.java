@@ -1,5 +1,6 @@
 package tnf.back.mvc.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,12 +14,18 @@ import tnf.back.db.entityes.Route;
 import tnf.back.db.entityes.User;
 import tnf.back.db.repo.RouteRepository;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class NewRouteController {
 
+    @Value("${upload.path}")
+    private String uploadPath;
     private final RouteRepository repository;
 
     public NewRouteController(RouteRepository repository) {
@@ -30,16 +37,30 @@ public class NewRouteController {
         return "create_route";
     }
 
-    @PostMapping("/editor/create/fin")
+    @PostMapping(value = "/editor/create/fin", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String saveRoute(
             @AuthenticationPrincipal User user,
             @RequestParam Map<String, Object> formData,
+            @RequestParam("img_main") MultipartFile imageFile,
+            @RequestParam("img_other") MultipartFile[] otherImgFile,
             Model model
-    ){
+    ) throws IOException {
         Route route = new Route();
         route.setAuthor(user);
         route.setRating(0);
         route.setCategories(null);
+
+        String path = UUID.randomUUID() + imageFile.getOriginalFilename();
+        Files.write(Paths.get(uploadPath + "/" + path), imageFile.getBytes());
+
+        StringBuilder mainImgPath = new StringBuilder();
+        for (var i = 0; i < otherImgFile.length; i++){
+            String pathOther = UUID.randomUUID() + otherImgFile[i].getOriginalFilename();
+            mainImgPath.append(mainImgPath).append(i >= otherImgFile.length - 1 ? "" : "_");
+            Files.write(Paths.get(uploadPath + "/" + pathOther), otherImgFile[i].getBytes());
+        }
+        route.setImageName(path);
+        route.setAddImages(mainImgPath.toString());
 
         ArrayList<String> keys = new ArrayList<>(formData.keySet());
         ArrayList<MapPoint> points = new ArrayList<>();
@@ -70,11 +91,13 @@ public class NewRouteController {
         }
         route.setPoints(points);
 
-        System.out.println(route.getName());
-        System.out.println(route.getShortDescription());
-        System.out.println(route.getDescription());
-        for (var e : route.getPoints())
-            System.out.println(e.getStr());
+//        System.out.println(route.getName());
+//        System.out.println(route.getShortDescription());
+//        System.out.println(route.getDescription());
+//        for (var e : route.getPoints())
+//            System.out.println(e.getStr());
+
+        repository.saveAndFlush(route);
 
         return "redirect:/home";
     }
