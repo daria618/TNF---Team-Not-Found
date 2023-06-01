@@ -49,15 +49,22 @@
   <div class="photo d-flex mb-3 border p-1">
     <figure class="main_photo col-5">
       <a>
-        <img src="../static/img/temp_main_photo.jpg">
+        <img th:if="${route.getImageName() == null}" src="../static/img/temp_main_photo.jpg" alt="ALT">
+        <img th:if="${route.getImageName() != null}" src="../static/img/temp_main_photo.jpg" th:src="'/img/' + ${route.getImageName()}" alt="ALT">
       </a>
     </figure>
-    <div class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
+    <div th:if="${route.getAddImages() == null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
       <figure class="col minor_photo ms-2"><img src="../static/img/temp_ph1.webp" alt="Фото"></figure>
       <figure class="col minor_photo ms-2"><img src="../static/img/temp_ph2.webp" alt="Фото"></figure>
-
       <!--      <figure class=""col minor_photo ms-2 mb-1"><img src="../static/img/fon.jpg" alt="Фото"></figure>-->
     </div>
+    <div th:if="${route.getAddImages() != null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
+      <div th:each="item : ${route.getAddImages()}">
+        <figure class="col minor_photo ms-2"><img th:src="'/img/' + ${item}" alt="Фото" src="../static/img/temp_ph1.webp"></figure>
+      </div>
+      <!--      <figure class=""col minor_photo ms-2 mb-1"><img src="../static/img/fon.jpg" alt="Фото"></figure>-->
+    </div>
+
   </div>
 
   <div class="border info p-2">
@@ -117,8 +124,6 @@
     </script>
   </div>
 
-  <a href="#" class="action-print">Распечатать</a>
-
   <div class="reviews mb-4">
     <h5 class="my-2 mx-4" >Отзывы</h5>
 
@@ -144,7 +149,10 @@
 
     <div class="review border mb-2" th:each="comment : ${comments}">
       <div class="d-flex profil mt-4 ms-4">
-        <img src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
+
+        <img th:if="${comment.getAuthor().getPhoto() != null}" th:src="'/img/' + ${comment.getAuthor().getPhoto()}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
+        <img th:if="${comment.getAuthor().getPhoto() == null}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
+
         <p class="name mx-2 mt-3" th:text="${comment.getAuthor().getUsername()}">Имя пользователя</p>
       </div>
       <div class="text mt-2 ms-4 mb-4 me-4" th:text="${comment.getText()}">

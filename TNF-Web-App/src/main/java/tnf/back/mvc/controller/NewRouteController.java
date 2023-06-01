@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
 
@@ -53,14 +54,14 @@ public class NewRouteController {
         String path = UUID.randomUUID() + imageFile.getOriginalFilename();
         Files.write(Paths.get(uploadPath + "/" + path), imageFile.getBytes());
 
-        StringBuilder mainImgPath = new StringBuilder();
+        HashSet<String> strings = new HashSet<>();
         for (var i = 0; i < otherImgFile.length; i++){
             String pathOther = UUID.randomUUID() + otherImgFile[i].getOriginalFilename();
-            mainImgPath.append(mainImgPath).append(i >= otherImgFile.length - 1 ? "" : "_");
+            strings.add(pathOther);
             Files.write(Paths.get(uploadPath + "/" + pathOther), otherImgFile[i].getBytes());
         }
         route.setImageName(path);
-        route.setAddImages(mainImgPath.toString());
+        route.setAddImages(strings);
 
         ArrayList<String> keys = new ArrayList<>(formData.keySet());
         ArrayList<MapPoint> points = new ArrayList<>();

@@ -45,6 +45,12 @@ public class RouteCardController {
         var texts = new ArrayList<String>();
         for (var point : route.getPoints()) texts.add(Transform.MapPointToYMAPString(point));
         model.addAttribute("texts", texts);
+
+        System.out.println("\n\n\n===============================\n\n\n");
+        for(var e : route.getAddImages())
+            System.out.println(e);
+        System.out.println("\n\n\n===============================\n\n\n");
+
         return "route_card";
     }
 

@@ -27,8 +27,6 @@ public class Route {
     private double rating;
     @Column(name = "image_name")
     private String imageName;
-    @Column(name = "add_images")
-    private String addImages;
 
     @ElementCollection(targetClass = RouteCategory.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "route_categories", joinColumns = @JoinColumn(name = "route_id"))
@@ -38,6 +36,10 @@ public class Route {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn
     private List<MapPoint> points;
+
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "addImages_imgs", joinColumns = @JoinColumn(name = "route_id"))
+    private Set<String> addImages;
 
     public Route() {
     }
@@ -49,7 +51,7 @@ public class Route {
             User author,
             double rating,
             String imageName,
-            String addImages,
+            Set<String> addImages,
             List<MapPoint> points,
             Set<RouteCategory> categories
     ) {
