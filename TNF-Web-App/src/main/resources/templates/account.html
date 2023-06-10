@@ -52,8 +52,14 @@
             <div>
                 <!--Форма загрузки изображения-->
                 <form method="post" action="/account/changeImage" enctype="multipart/form-data">
-                    <label for="validationServerImg" class="form-label mt-4">Фото пользователя</label>
-                    <input type="file" name="imageFile" class="form" id="validationServerImg" placeholder="Фото" required>
+                    <label class="form-label mt-4">Фото пользователя</label>
+                    <div class="file-upload">
+                        <label for="file-input" class="custom-file-upload px-4 py-2 ">
+                            Выбрать файл
+                        </label>
+                        <input id="file-input" type="file" name="img"/>
+                    </div>
+
                     <div th:if="${imgMsg}"><h5 th:text="${imgMsg}"></h5></div>
                     <button class="btn close" type="submit">Сохранить фото</button>
 <!--                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />-->
@@ -79,7 +85,7 @@
                     <input name="new" type="password" class="form mt-4" placeholder="Введите новый пароль..." required>
                     <input name="confirm" type="password" class="form mt-4" placeholder="Введите новый пароль еще раз..." required>
                     <div th:if="${pwdMsg}"><h5 th:text="${pwdMsg}"></h5></div>
-                    <button class="btn close  " type="submit">СМЕНИТЬ ПАРОЛЬ</button>
+                    <button class="btn close  " type="submit">Сменить пароль</button>
                 </form>
             </div>
         </div>

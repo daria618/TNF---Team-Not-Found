@@ -90,12 +90,12 @@ figure{
 }
 
 .edit{
-    background-color: #cc0000;
+    background-color: #0A9E07;
     color: #FFFFFF;
     text-decoration-line: none;
     border-radius: 5px;
 }
-.edit:hover{ background-color: #ad0404; color: #FFFFFF;cursor: pointer;}
+.edit:hover{ background-color: #0A7C07; color: #FFFFFF;cursor: pointer;}
 
 .p {
     font-weight: 900;
@@ -104,3 +104,17 @@ figure{
      max-height: 62px;
      max-width: 62px;
  }
+.coord{
+     font-weight: 100;
+     font-size: calc(0.575rem + 0.35vw);
+    font-family: Amiri, sans-serif;
+}
+button[type=submit]{
+    background: #0A9E07;
+    border-radius: 5px;
+    color: #FFFFFF;
+    border-style: none;
+}
+button[type=submit]:hover{
+    background: #0A7C07;
+}

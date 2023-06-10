@@ -46,19 +46,16 @@
     })
   </script>
   <div class="photo d-flex mb-3 border p-1">
-    <figure class="main_photo col-5">
+    <figure class="main_photo col-5 mb-0">
       <a>
         <img th:if="${route.getImageName() == null}" src="../static/img/fon.jpg">
         <img th:if="${route.getImageName() != null}" th:src="'/img/' + ${route.getImageName()}">
       </a>
     </figure>
-    <div th:if="${route.getAddImages() == null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
-      <figure class="col minor_photo ms-2"><img src="../static/img/temp_ph1.webp" alt="Фото"></figure>
-      <figure class="col minor_photo ms-2"><img src="../static/img/temp_ph2.webp" alt="Фото"></figure>
-    </div>
+    <div th:if="${route.getAddImages() == null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0"></div>
     <div th:if="${route.getAddImages() != null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
       <div th:each="item : ${route.getAddImages()}">
-        <figure class="col minor_photo ms-2"><img th:src="'/img/' + ${item}" alt="Фото" src="../static/img/temp_ph1.webp"></figure>
+        <figure class="col minor_photo ms-2"><img th:src="'/img/' + ${item}"  src="../static/img/fon.jpg"></figure>
       </div>
     </div>
 
@@ -67,8 +64,11 @@
   <div class="border info p-2">
     <div class="mb-2">
       <div class="d-flex justify-content-between profil mt-4 ms-4" >
-        <p class="name align-self-center mb-0" th:text="'Автор: '+${route.getAuthor().getUsername()}">Имя пользователя</p>
-        <p class="hour align-self-center mb-0" th:text="${route.getPoints().size()}">Кол-во часов</p>
+        <div class="d-flex">
+          <img th:if="${logUser.getPhoto() == null}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
+          <img th:if="${logUser.getPhoto() != null}" th:src="'/img/' + ${logUser.getPhoto()}" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
+          <p class="name align-self-center ms-3 mb-0" th:text="'Автор: '+${route.getAuthor().getUsername()}">Имя пользователя</p>
+        </div>
         <div class="align-self-center ">
           <img class="me-3" src="../static/img/heart.png" style="width: 32px; height: 32px">
           <img src="../static/img/share.png" style="width: 32px; height: 32px">
@@ -88,12 +88,16 @@
       <div th:each="item : ${route.getPoints()}">
         <div class="point d-flex ">
           <div class="circle m-2"></div>
-          <p class="m-0 align-self-center" th:text="${item.getStr()}">Точка</p>
+          <div>
+            <p class="m-0 align-self-center" th:text="${item.getStr()}" >Точка</p>
+            <p class="mb-1 coord fw-light">Координаты</p>
+            <p>Описание</p>
+          </div>
         </div>
       </div>
 
     </div>
-    <div class="col-8 map" id="map" style="background-color: #666666"></div>
+    <div class="col-8 map" id="map" style="background-color: #666666; border-radius: 5px;"></div>
     <script type="text/javascript" th:inline="javascript">
       ymaps.ready(init);
       function init(){
@@ -112,15 +116,17 @@
 
         jsList.forEach(item => console.log(item));
 
-        var multiRoute = new ymaps.multiRouter.MultiRoute({
-          referencePoints: jsList,
-          params: {
-            routingMode: "pedestrian"
-          }
-        }, {
-          boundsAutoApply: true
+        var route = ymaps.route(jsList, {
+          mapStateAutoApply: true
         });
-        myMap.geoObjects.add(multiRoute);
+
+        route.then(function (route) {
+          myMap.geoObjects.add(route);
+          route.options.set({
+            routingMode: 'pedestrian'
+          });
+        });
+
       }
     </script>
   </div>
@@ -128,8 +134,9 @@
   <div class="reviews mb-4">
     <div class="d-flex">
       <h5 class="my-2 mx-4 py-2 px-5">Отзывы</h5>
-      <a th:href="'/edit/'+${route.getId()}" class="my-2 mx-4 py-2 px-4 edit">Редактировать маршрут</a>
+      <a th:href="'/edit/'+${route.getId()}" class="my-2 py-2 px-4 edit">Редактировать маршрут</a>
     </div>
+<!--    ПЕРЕДЕЛАТЬ-->
     <div class="review border mb-2">
       <div class="d-flex profil mt-4 ms-4">
         <img th:if="${logUser.getPhoto() == null}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
@@ -139,10 +146,10 @@
       <div class="text mt-2 ms-4 mb-4 me-4">
         <form method="post" th:action="'/routes/'+${route.getId()}">
           <div>
-            <textarea rows="4" cols="150" style="height: 150px; width: 100%" name="comment_text"></textarea>
+            <textarea rows="4" cols="150" style="height: 150px; width: 100%; border-radius: 5px" name="comment_text"></textarea>
           </div>
           <div>
-            <button class="flex-fill text-center nav-link active" type="submit">Отправить</button>
+            <button class="flex-fill text-center px-4 py-2" type="submit">Отправить</button>
           </div>
         </form>
       </div>
@@ -151,9 +158,8 @@
     <div class="review border mb-2" th:each="comment : ${comments}">
       <div class="d-flex profil mt-4 ms-4">
 
-        <img th:if="${comment.getAuthor().getPhoto() != null}" th:src="'/img/' + ${comment.getAuthor().getPhoto()}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
-        <img th:if="${comment.getAuthor().getPhoto() == null}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
-
+        <img th:if="${comment.getAuthor().getPhoto() != null}" th:src="'/img/' + ${comment.getAuthor().getPhoto()}" class="img-fluid rounded-pill" style="align-content: center ">
+        <img th:if="${comment.getAuthor().getPhoto() == null}" src="../static/img/person.jpg" class="img-fluid rounded-pill" style="align-content: center ">
         <p class="name mx-2 mt-3" th:text="${comment.getAuthor().getUsername()}">Имя пользователя</p>
       </div>
       <div class="text mt-2 ms-4 mb-4 me-4" th:text="${comment.getText()}">
