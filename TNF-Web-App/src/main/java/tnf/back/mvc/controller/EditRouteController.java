@@ -30,6 +30,7 @@ public class EditRouteController {
         var route = repository.findById(id).get();
         model.addAttribute("isLoaded", true);
         model.addAttribute("route", route);
+
         return "create_route";
     }
 }

@@ -48,7 +48,10 @@ function addNewPoint(lat, lon, text, desc) {
         )
     }
     if (typeof desc !== 'undefined'){
-
+        switchDesc(
+            div.children.item(0).children.item(0).children.item(2).children.item(1).children.item(0).children.item(0),
+            desc
+        )
     }
 
     ind++
@@ -152,7 +155,7 @@ function setTypeSelect(parentNode) {
     choosePoint(div.children.item(0))
 }
 
-function switchDesc(node){
+function switchDesc(node, desc){
     if (node.classList.contains('addDesc')){
         node.classList.remove('addDesc')
         node.classList.add('removeDesc')
@@ -160,7 +163,9 @@ function switchDesc(node){
         const divDesc = document.createElement('div');
         divDesc.classList.add('d-flex', 'justify-content-center')
         divDesc.nodeName = name='desc'
-        divDesc.innerHTML = "<textarea name='" + node.id + "_desc' placeholder='Описание точки' style='width: 95%' '></textarea>"
+        if (typeof desc === 'undefined')
+            desc = ''
+        divDesc.innerHTML = "<textarea name='" + node.id + "_desc' placeholder='Описание точки' style='width: 95%' '>"+desc+"</textarea>"
         node.parentNode.parentNode.appendChild(divDesc)
     }
     else if (node.classList.contains('removeDesc')){

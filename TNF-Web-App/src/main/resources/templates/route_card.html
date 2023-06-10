@@ -120,13 +120,13 @@
           mapStateAutoApply: true
         });
 
-        route.then(function (route) {
-          myMap.geoObjects.add(route);
-          route.options.set({
-            routingMode: 'pedestrian'
-          });
+        route.options.set({
+          routingMode: 'pedestrian'
         });
 
+        route.then(function (route) {
+          myMap.geoObjects.add(route);
+        });
       }
     </script>
   </div>
