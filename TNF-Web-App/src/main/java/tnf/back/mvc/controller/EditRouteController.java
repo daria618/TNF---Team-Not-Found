@@ -30,21 +30,6 @@ public class EditRouteController {
         var route = repository.findById(id).get();
         model.addAttribute("isLoaded", true);
         model.addAttribute("route", route);
-
-
-//        ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            String jsonString = mapper.writeValueAsString(route);
-//            model.addAttribute("routeJson", jsonString);
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
-
-//        model.addAttribute("loaded_name", route.getName());
-//        model.addAttribute("loaded_short_desc", route.getShortDescription());
-//        model.addAttribute("loaded_desc", route.getDescription());
-//        model.addAttribute("loaded_categories", route.getCategories());
-//        model.addAttribute("loaded_points", route.getPoints());
         return "create_route";
     }
 }

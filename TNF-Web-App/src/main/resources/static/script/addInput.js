@@ -6,7 +6,7 @@ let points = []
 
 let myMap
 
-function addNew() {
+function addNew(type) {
     const form = document.getElementById("route_configurator");
 
     const div = document.createElement("div");
@@ -33,6 +33,10 @@ function addNew() {
         "                    </div>\n" +
         "                </div>"
     form.appendChild(div);
+
+    if (typeof type !== 'undefined'){
+        let cont = div.children.item(0).children.item(0).children.item(2).children.item(0)
+    }
 
     ind++
 }
@@ -97,8 +101,6 @@ function setTypeName(parentNode) {
     }
     const div = document.createElement("div")
     div.id = "inputs"
-
-
 
     div.innerHTML = "<div><input type='text' class='my-3 mx-3' placeholder='Введите адрес' name='"+parentNode.parentNode.id+"_adress'></div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
