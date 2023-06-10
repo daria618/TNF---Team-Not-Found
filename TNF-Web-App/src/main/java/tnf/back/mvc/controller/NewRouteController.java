@@ -64,39 +64,46 @@ public class NewRouteController {
         route.setAddImages(strings);
 
         ArrayList<String> keys = new ArrayList<>(formData.keySet());
+        for (String key : keys) {
+            switch (key) {
+                case "route_name" -> route.setName(formData.get(key).toString());
+                case "desc_short" -> route.setShortDescription(formData.get(key).toString());
+                case "desc_long" -> route.setDescription(formData.get(key).toString());
+            }
+        }
+
         ArrayList<MapPoint> points = new ArrayList<>();
-        for (int i = 0; i < keys.size(); i++){
-            System.out.println(keys.get(i) + " : " + formData.get(keys.get(i)).toString());
-            if (keys.get(i).equals("route_name"))
-                route.setName(formData.get(keys.get(i)).toString());
-            else if (keys.get(i).equals("desc_short"))
-                route.setShortDescription(formData.get(keys.get(i)).toString());
-            else if (keys.get(i).equals("desc_long"))
-                route.setDescription(formData.get(keys.get(i)).toString());
-            else{
-                String[] parts = keys.get(i).split("_");
-                if (parts[0].equals("buttons")){
-                    if (parts[2].equals("adress")){
-                        points.add(new MapPoint(null, null, formData.get(keys.get(i)).toString()));
+        int lastInd = Integer.MIN_VALUE;
+        for (String key : keys) {
+            String[] parts = key.split("_");
+            if (parts[0].equals("pointData")) {
+                int ind = Integer.parseInt(parts[1]);
+
+                if (lastInd != ind) {
+                    points.add(new MapPoint());
+                    lastInd = ind;
+                }
+
+                switch (parts[2]) {
+                    case "coord" -> {
+                        if (parts[3].equals("lat"))
+                            points.get(points.size() - 1).setLatitude(formData.get(key).toString());
+                        else if (parts[3].equals("lon"))
+                            points.get(points.size() - 1).setLongitude(formData.get(key).toString());
                     }
-                    else if (parts[2].equals("coord")){
-                        points.add(new MapPoint(
-                                formData.get(keys.get(i)).toString(),
-                                formData.get(keys.get(i + 1)).toString(),
-                                null
-                        ));
-                        i++;
-                    }
+                    case "adress" -> points.get(points.size() - 1).setTextRepresent(formData.get(key).toString());
+                    case "desc" -> points.get(points.size() - 1).setDescription(formData.get(key).toString());
                 }
             }
         }
+
         route.setPoints(points);
 
-//        System.out.println(route.getName());
-//        System.out.println(route.getShortDescription());
-//        System.out.println(route.getDescription());
-//        for (var e : route.getPoints())
-//            System.out.println(e.getStr());
+        System.out.println(route.getName());
+        System.out.println(route.getShortDescription());
+        System.out.println(route.getDescription());
+        for (var e : route.getPoints())
+            System.out.println(e.getStr());
 
         repository.saveAndFlush(route);
 

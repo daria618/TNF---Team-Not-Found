@@ -20,14 +20,14 @@ function addNew() {
         "                            <button type='button' class='btn-close' onclick='remove(this.parentNode.parentNode.parentNode.parentNode)' aria-label='Закрыть'></button>\n" +
         "                        </div>\n" +
         "                        <p>Выберите способ указания точки:</p>\n" +
-        "                        <div class='p-2'>\n" +
-        "                            <div id='buttons_" + ind + "' class='cooridnates row buttonSet' style='--bs-gutter-x: 0'>\n" +
+        "                        <div id='pointData_" + ind + "' class='p-2'>\n" +
+        "                            <div class='cooridnates row buttonSet' style='--bs-gutter-x: 0'>\n" +
         "                                    <input type='button' onclick='setTypeCoord(this.parentNode)' name='coord' class='col mx-2 px-2 py-1' value='Координаты'>\n" +
         "                                    <input type='button' onclick='setTypeName(this.parentNode)' name='nametext' class='col mx-2 px-2 py-1' value='Адрес'>\n" +
         "                                    <input type='button' onclick='setTypeSelect(this.parentNode)' name='select' class='col mx-2 px-2 py-1' value='На карте'>\n" +
         "                            </div>\n" +
         "                            <div>" +
-        "                                <div class='my-2 d-flex justify-content-center'><input class='addDesc' type='button' style='width: 50%' value='Добавить описание' onclick='switchDesc(this)'></div>" +
+        "                                <div class='my-2 d-flex justify-content-center'><input id='pointData_"+ind+"' class='addDesc' type='button' style='width: 50%' value='Добавить описание' onclick='switchDesc(this)'></div>" +
         "                            </div>" +
         "                        </div>\n" +
         "                    </div>\n" +
@@ -75,8 +75,8 @@ function setTypeCoord(parentNode) {
     const div = document.createElement("div")
     div.id = "inputs"
     div.innerHTML = "<div class='cooridnates row mx-3 my-3' style='--bs-gutter-x: 0'>\n" +
-        "               <input class='col me-2' type='text' placeholder='Широта' name='"+parentNode.id+"_coord_lat'>\n" +
-        "               <input class='col ' type='text' placeholder='Долгота' name='"+parentNode.id+"_coord_lon'>\n" +
+        "               <input class='col me-2' type='text' placeholder='Широта' name='"+parentNode.parentNode.id+"_coord_lat'>\n" +
+        "               <input class='col ' type='text' placeholder='Долгота' name='"+parentNode.parentNode.id+"_coord_lon'>\n" +
         "           </div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
     parentNode.appendChild(div)
@@ -97,7 +97,7 @@ function setTypeName(parentNode) {
     }
     const div = document.createElement("div")
     div.id = "inputs"
-    div.innerHTML = "<div><input type='text' class='my-3 mx-3' placeholder='Введите адрес' name='"+parentNode.id+"_adress'></div>" +
+    div.innerHTML = "<div><input type='text' class='my-3 mx-3' placeholder='Введите адрес' name='"+parentNode.parentNode.id+"_adress'></div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
     parentNode.appendChild(div)
 }
@@ -116,8 +116,8 @@ function setTypeSelect(parentNode) {
     const div = document.createElement("div")
     div.id = "inputs"
     div.innerHTML = "<div class='cooridnates row mx-3 my-3' style='--bs-gutter-x: 0'>\n" +
-        "               <input class='col me-2' type='text' placeholder='Широта' name='"+parentNode.id+"_coord_lat'>\n" +
-        "               <input class='col ' type='text' placeholder='Долгота' name='"+parentNode.id+"_coord_lon'>\n" +
+        "               <input class='col me-2' type='text' placeholder='Широта' name='"+parentNode.parentNode.id+"_coord_lat'>\n" +
+        "               <input class='col ' type='text' placeholder='Долгота' name='"+parentNode.parentNode.id+"_coord_lon'>\n" +
         "           </div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
     parentNode.appendChild(div)
@@ -133,7 +133,7 @@ function switchDesc(node){
         const divDesc = document.createElement('div');
         divDesc.classList.add('d-flex', 'justify-content-center')
         divDesc.nodeName = name='desc'
-        divDesc.innerHTML = "<textarea placeholder='Описание точки' style='width: 95%' '></textarea>"
+        divDesc.innerHTML = "<textarea name='" + node.id + "_desc' placeholder='Описание точки' style='width: 95%' '></textarea>"
         node.parentNode.parentNode.appendChild(divDesc)
     }
     else if (node.classList.contains('removeDesc')){

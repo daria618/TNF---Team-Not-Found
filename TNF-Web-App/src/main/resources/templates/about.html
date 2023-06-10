@@ -51,32 +51,12 @@
 
 </main>
 <footer class="container-fluid p-0" style="background-color: #171A1A;">
-  <div class="container overflow-hidden" style="padding-top: 2%">
-    <div class="row">
-      <div class="col-8">
-        <h4 class="mb-4">КОРОТКО О НАС</h4>
-        <p>С нашей помощью путешественники могут легко планировать свои поездки и знакомиться с природными
-          красотами, достопримечательностями и видами активного отдыха, которые может предложить Урал. Наша
-          платформа предоставляет пользователям подробную информацию о популярных туристических направлениях,
-          вариантах транспорта и многом другом. Используя ваш сайт, путешественники могут создавать
-          индивидуальные маршруты, соответствующие их интересам, предпочтениям и бюджету, обеспечивая
-          незабываемое и приятное путешествие по Уралу.</p>
-      </div>
-      <div class="col-2" style="margin-left: 8%;">
-        <h4>МЕНЮ</h4>
-        <hr>
-        <ul>
-          <li><a href="/home">Главная</a></li>
-          <li><a href="/routes">Маршруты</a></li>
-          <li><a href="/addRoute">Добавить свой маршрут</a></li>
-          <li><a href="/account">Личный кабинет</a></li>
-          <li><a href="/about">О проекте</a></li>
-        </ul>
-        <p class="mt-5">
-          <a href="#up">Вернуться наверх</a>
-        </p>
-      </div>
-    </div>
+  <div id="footer" class="container overflow-hidden" style="padding-top: 2%">
+    <script>
+      fetch('footer.html')
+              .then(response => response.text())
+              .then(data => document.getElementById('footer').innerHTML = data);
+    </script>
   </div>
 </footer>
 </body>
