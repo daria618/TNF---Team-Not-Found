@@ -128,9 +128,8 @@
   <div class="reviews mb-4">
     <div class="d-flex">
       <h5 class="my-2 mx-4 py-2 px-5">Отзывы</h5>
-      <a class="my-2 mx-4 py-2 px-4 edit">Редактировать маршрут</a>
+      <a th:href="'/edit/'+${route.getId()}" class="my-2 mx-4 py-2 px-4 edit">Редактировать маршрут</a>
     </div>
-<!--    ПЕРЕДЕЛАТЬ-->
     <div class="review border mb-2">
       <div class="d-flex profil mt-4 ms-4">
         <img th:if="${logUser.getPhoto() == null}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">

@@ -46,7 +46,7 @@ public class DBInit implements CommandLineRunner {
         }
 
         ArrayList<Route> routes = new ArrayList<>();
-        routes.add(route_0(users.get(1)));
+        routes.add(route_0(users.get(4)));
 
         userRepository.saveAll(users);
         routeRepository.saveAll(routes);

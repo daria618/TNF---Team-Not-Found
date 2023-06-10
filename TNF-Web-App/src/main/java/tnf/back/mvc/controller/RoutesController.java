@@ -18,6 +18,7 @@ public class RoutesController {
     public String openRoutes(Model model){
         var routes = repository.findAll();
         model.addAttribute("routes", routes);
+        model.addAttribute("test", "TEST");
         return "routes";
     }
 

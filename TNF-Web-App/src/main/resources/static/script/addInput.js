@@ -97,6 +97,9 @@ function setTypeName(parentNode) {
     }
     const div = document.createElement("div")
     div.id = "inputs"
+
+
+
     div.innerHTML = "<div><input type='text' class='my-3 mx-3' placeholder='Введите адрес' name='"+parentNode.parentNode.id+"_adress'></div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
     parentNode.appendChild(div)

@@ -24,13 +24,15 @@
 
 </head>
 <body>
+<div th:replace="my-page" data-myvar="${myVar}"></div>
+
 <div id="up"></div>
 <header class="container-fluid shadow p-3 mb-5 bg-body">
     <div class="container">
         <nav class="navbar custom-navbar flex-column flex-sm-row">
             <a class="p-2 flex-fill text-center nav-link" href="/home">Главная</a>
             <a class="p-2 flex-fill text-center nav-link" href="/routes">Маршруты</a>
-            <a class="p-2 flex-fill text-center nav-link active" href="/addRoute">Добавить свой маршрут</a>
+            <a class="p-2 flex-fill text-center nav-link active" href="/editor/create">Добавить свой маршрут</a>
             <a class="p-2 flex-fill text-center nav-link" aria-current="page" href="/account">Личный кабинет</a>
             <a class="p-2 flex-fill text-center nav-link" href="/about">О проекте</a>
         </nav>

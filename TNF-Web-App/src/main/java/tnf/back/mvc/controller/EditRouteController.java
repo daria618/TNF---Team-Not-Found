@@ -1,5 +1,7 @@
 package tnf.back.mvc.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -20,20 +22,29 @@ public class EditRouteController {
         this.repository = repository;
     }
 
-    @GetMapping("/editor/edit/{route_id}")
+    @GetMapping("/edit/{route_id}")
     public String openEditor(
-            @AuthenticationPrincipal User user,
             @PathVariable("route_id") Long id,
             Model model
     ) {
         var route = repository.findById(id).get();
         model.addAttribute("isLoaded", true);
-        model.addAttribute("loaded_name", route.getName());
-        model.addAttribute("loaded_short_desc", route.getShortDescription());
-        model.addAttribute("loaded_desc", route.getDescription());
-        model.addAttribute("loaded_categories", route.getCategories());
-        model.addAttribute("loaded_points", route.getPoints());
+        model.addAttribute("route", route);
+
+
+//        ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            String jsonString = mapper.writeValueAsString(route);
+//            model.addAttribute("routeJson", jsonString);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+
+//        model.addAttribute("loaded_name", route.getName());
+//        model.addAttribute("loaded_short_desc", route.getShortDescription());
+//        model.addAttribute("loaded_desc", route.getDescription());
+//        model.addAttribute("loaded_categories", route.getCategories());
+//        model.addAttribute("loaded_points", route.getPoints());
         return "create_route";
     }
-
 }
