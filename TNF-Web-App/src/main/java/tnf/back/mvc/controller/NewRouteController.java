@@ -34,7 +34,8 @@ public class NewRouteController {
     }
 
     @GetMapping("/editor/create")
-    public String open(){
+    public String open(Model model){
+        model.addAttribute("isLoaded", false);
         return "create_route";
     }
 
@@ -107,7 +108,7 @@ public class NewRouteController {
 
         repository.saveAndFlush(route);
 
-        return "redirect:/home";
+        return "redirect:/routes";
     }
 
 }

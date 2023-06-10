@@ -55,13 +55,11 @@
     <div th:if="${route.getAddImages() == null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
       <figure class="col minor_photo ms-2"><img src="../static/img/temp_ph1.webp" alt="Фото"></figure>
       <figure class="col minor_photo ms-2"><img src="../static/img/temp_ph2.webp" alt="Фото"></figure>
-      <!--      <figure class=""col minor_photo ms-2 mb-1"><img src="../static/img/fon.jpg" alt="Фото"></figure>-->
     </div>
     <div th:if="${route.getAddImages() != null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
       <div th:each="item : ${route.getAddImages()}">
         <figure class="col minor_photo ms-2"><img th:src="'/img/' + ${item}" alt="Фото" src="../static/img/temp_ph1.webp"></figure>
       </div>
-      <!--      <figure class=""col minor_photo ms-2 mb-1"><img src="../static/img/fon.jpg" alt="Фото"></figure>-->
     </div>
 
   </div>
@@ -114,17 +112,15 @@
 
         jsList.forEach(item => console.log(item));
 
-        var route = ymaps.route(jsList, {
-          mapStateAutoApply: true
+        var multiRoute = new ymaps.multiRouter.MultiRoute({
+          referencePoints: jsList,
+          params: {
+            routingMode: "pedestrian"
+          }
+        }, {
+          boundsAutoApply: true
         });
-
-        route.then(function (route) {
-          myMap.geoObjects.add(route);
-          route.options.set({
-            routingMode: 'pedestrian'
-          });
-        });
-
+        myMap.geoObjects.add(multiRoute);
       }
     </script>
   </div>
