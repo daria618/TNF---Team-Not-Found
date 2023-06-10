@@ -35,6 +35,7 @@ public class WebSecurityConfig {
                                 "/home",
                                 "/registration",
                                 "/static/**",
+                                "/img/**",
                                 "/routes/**",
                                 "/about"
                         ).permitAll()

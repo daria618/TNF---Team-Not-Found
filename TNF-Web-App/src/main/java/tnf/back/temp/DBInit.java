@@ -7,10 +7,8 @@ import tnf.back.db.repo.CommentRepository;
 import tnf.back.db.repo.RouteRepository;
 import tnf.back.db.repo.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Random;
+import java.awt.*;
+import java.util.*;
 
 @Component
 public class DBInit implements CommandLineRunner {
@@ -27,141 +25,60 @@ public class DBInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        ArrayList<User> users = new ArrayList<>() {{
-            add(createTestUser());
-            add(createAnotherTestUser());
-            add(createAdmin());
-            add(createFastLogInUser());
-        }};
-
-        ArrayList<Route> routes = new ArrayList<>() {{
-            add(createTestRoute_1(users.get(1)));
-            add(createTestRoute_2(users.get(2)));
-            add(createTestRoute_3(users.get(1)));
-            add(createTestRoute_Mixed(users.get(2)));
-        }};
-
-        userRepository.saveAll(users);
-        routeRepository.saveAll(routes);
-
-        for (var u : users)
-            for (var r : routes)
-                commentRepository.save(new Comment(randString(random.nextInt(120) + 10), 0L, u, r));
-    }
-
-    private User createTestUser() {
-        return new User(
-                "testUser",
-                "testUser",
-                "testUser@email.com",
-                true,
-                Collections.singleton(Role.USER),
-                null
-        );
-    }
-
-    private User createAnotherTestUser() {
-        return new User(
-                "anotherTestUser",
-                "anotherTestUser",
-                "anotherTestUser@email.com",
-                true,
-                Collections.singleton(Role.USER),
-                null
-        );
-    }
-
-    private User createAdmin() {
-        return new User(
+        ArrayList<User> users = new ArrayList<>();
+        users.add(new User(
                 "admin",
                 "admin",
                 "admin@email.com",
                 true,
                 Collections.singleton(Role.ADMIN),
                 null
-        );
+        ));
+        for (int i = 0; i < 5; i++) {
+            users.add(new User(
+                    "TestUser_" + i,
+                    "password_" + i,
+                    "EMail_" + i,
+                    true,
+                    Collections.singleton(Role.USER),
+                    "TestUser_" + i + ".jpg"
+            ));
+        }
+
+        ArrayList<Route> routes = new ArrayList<>();
+        routes.add(route_0(users.get(1)));
+
+        userRepository.saveAll(users);
+        routeRepository.saveAll(routes);
     }
 
-    private User createFastLogInUser() {
-        return new User(
-                "n",
-                "p",
-                "emailAdress",
-                true,
-                Collections.singleton(Role.USER),
-                null
-        );
-    }
-
-    public Route createTestRoute_1(User author) {
+    private Route route_0(User user) {
+        HashSet<RouteCategory> categories = new HashSet<>();
+        categories.add(RouteCategory.HISTORY);
+        categories.add(RouteCategory.ROMANTIC);
+        HashSet<String> images = new HashSet<>(){{
+            add("r1_a0.jpg");
+            add("r1_a1.webp");
+            add("r1_a2.jpg");
+            add("r1_a3.jpg");
+        }};
+        ArrayList<MapPoint> points = new ArrayList<>(){{
+            add(new MapPoint("56.827532", "60.602487", null, "Выйти на станции метро 'Геологическая'"));
+            add(new MapPoint("56.818387", "60.606228", null, "Дойти до входа в парк"));
+            add(new MapPoint("56.817654", "60.597064", null, "Пройти по аллее Дворца Спорта"));
+            add(new MapPoint("56.818905", "60.593892", null, "Сойти с аллеи и войти в парк"));
+            add(new MapPoint("56.823571", "60.595671", null, "Пройти по парку"));
+        }};
         return new Route(
-                "Тестовый маршрут №1, названия",
-                "Идейные соображения высшего порядка, а также новая модель организационной деятельности в значительной",
-                "Это длинное описание 1",
-                author,
+                "Зеленая роща",
+                "Самый большой и очень старый парк в центре Екатеринбурга.",
+                "В позапрошлом веке указом императора Александра I вся эта территория была отдана Ново-Тихвинскому женскому монастырю. В советские времена здесь размещалась станция юных натуралистов.",
+                user,
                 0,
-                null,
-                null,
-                new LinkedList<>() {{
-                    add(new MapPoint(null, null, "улица Челюскинцев, 33А, Екатеринбург"));
-                    add(new MapPoint(null, null, "улица Луначарского, 31, Екатеринбург"));
-                    add(new MapPoint(null, null, "ул. Железнодорожников, 3, Екатеринбург"));
-                }},
-                Collections.singleton(RouteCategory.HISTORY)
-        );
-    }
-
-    public Route createTestRoute_2(User author) {
-        return new Route(
-                "Тестовый маршрут №2, координаты",
-                " Товарищи! постоянный количественный рост и сфера",
-                "Это длинное описание 2",
-                author,
-                15,
-                null,
-                null,
-                new LinkedList<>() {{
-                    add(new MapPoint("56.838261", "60.585636", null));
-                    add(new MapPoint("56.837380", "60.590364", null));
-                    add(new MapPoint("56.838615", "60.597998", null));
-                }},
-                Collections.singleton(RouteCategory.SOLO)
-        );
-    }
-
-    public Route createTestRoute_3(User author) {
-        return new Route(
-                "Тестовый маршрут №3, координаты",
-                "Задача организации, в особенности же новая модель организационной деятельности требуют от нас анализа соответствующий условий активизации",
-                "Это длинное описание 3",
-                author,
-                30,
-                null,
-                null,
-                new LinkedList<>() {{
-                    add(new MapPoint("56.848356", "60.601967", null));
-                    add(new MapPoint("56.845208", "60.612073", null));
-                    add(new MapPoint("56.847944", "60.637457", null));
-                }},
-                Collections.singleton(RouteCategory.ADVENTURE)
-        );
-    }
-
-    public Route createTestRoute_Mixed(User author) {
-        return new Route(
-                "Тестовый маршрут №4 микс",
-                "Это описание тестового маршрута с точками заданными разными методами",
-                "Это длинное описание 4",
-                author,
-                30,
-                null,
-                null,
-                new LinkedList<>() {{
-                    add(new MapPoint("56.848356", "60.601967", null));
-                    add(new MapPoint(null, null, "улица Луначарского, 31, Екатеринбург"));
-                    add(new MapPoint("56.847944", "60.637457", null));
-                }},
-                Collections.singleton(RouteCategory.ROMANTIC)
+                "r1_m.jpg",
+                images,
+                points,
+                categories
         );
     }
 

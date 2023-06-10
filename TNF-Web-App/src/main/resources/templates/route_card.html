@@ -115,11 +115,17 @@
 
         jsList.forEach(item => console.log(item));
 
-        ymaps.route(jsList).then(function (route) {
-          myMap.geoObjects.add(route);
-        }, function (error) {
-          alert("Возникла ошибка: " + error.message);
+        var route = ymaps.route(jsList, {
+          mapStateAutoApply: true
         });
+
+        route.then(function (route) {
+          myMap.geoObjects.add(route);
+          route.options.set({
+            routingMode: 'pedestrian'
+          });
+        });
+
       }
     </script>
   </div>
@@ -130,15 +136,14 @@
 <!--    ПЕРЕДЕЛАТЬ-->
     <div class="review border mb-2">
       <div class="d-flex profil mt-4 ms-4">
-        <img src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
+        <img th:if="${logUser.getPhoto() == null}" src="../static/img/person.jpg" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
+        <img th:if="${logUser.getPhoto() != null}" th:src="'/img/' + ${logUser.getPhoto()}" class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
         <p class="name mx-2 mt-3" th:text="${logUser.getUsername()}"></p>
       </div>
       <div class="text mt-2 ms-4 mb-4 me-4">
         <form method="post" th:action="'/routes/'+${route.getId()}">
           <div>
-<!--            <input type="text" placeholder="..." name="new_comment_text" style="height: 150px; width: 100%">-->
             <textarea rows="4" cols="150" style="height: 150px; width: 100%" name="comment_text"></textarea>
-<!--            <textarea rows="4" cols="150" style="height: 150px; width: 100%" name="comment_text"></textarea>-->
           </div>
           <div>
             <button class="flex-fill text-center nav-link active" type="submit">Отправить</button>
