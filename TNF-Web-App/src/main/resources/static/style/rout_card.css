@@ -117,14 +117,14 @@ button[type=submit]:hover{
 .points{
     overflow: auto;
 }
-points::-webkit-scrollbar {
+.points::-webkit-scrollbar {
     width: 8px;               /* ширина scrollbar */
     height: 8px;
 }
-points::-webkit-scrollbar-track { /* фон */
+.points::-webkit-scrollbar-track { /* фон */
     background-color: rgba(232,232,232,0.2);
 }
-points::-webkit-scrollbar-thumb {
+.points::-webkit-scrollbar-thumb {
     background-color: #0A9E07;    /* цвет плашки */
     border-radius: 4px;     /* закругления плашки */
 }
