@@ -96,7 +96,7 @@
                 </div>
                 <div class="points mt-3 " id="pointsDiv">
                     <div class="d-flex">
-                        <input type="button" onclick="addNew()" class="add me-3" value="+">
+                        <input type="button" onclick="addNewPoint()" class="add me-3" value="+">
                         <h5 class="d-flex align-items-center m-0">Добавить точку</h5>
                     </div>
                 </div>
@@ -125,6 +125,11 @@
     </form>
 
 </main>
+
+<script>
+    addNewPoint(1, 2, undefined, 'desc')
+    addNewPoint(undefined, undefined, 'text', 'desc2')
+</script>
 
 <footer class="container-fluid p-0" style="background-color: #171A1A;">
     <div id="footer" class="container overflow-hidden" style="padding-top: 2%">

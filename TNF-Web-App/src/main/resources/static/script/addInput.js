@@ -6,7 +6,7 @@ let points = []
 
 let myMap
 
-function addNew(type) {
+function addNewPoint(lat, lon, text, desc) {
     const form = document.getElementById("route_configurator");
 
     const div = document.createElement("div");
@@ -34,8 +34,21 @@ function addNew(type) {
         "                </div>"
     form.appendChild(div);
 
-    if (typeof type !== 'undefined'){
-        let cont = div.children.item(0).children.item(0).children.item(2).children.item(0)
+    if (typeof lat !== 'undefined' && typeof lon !== 'undefined'){
+        setTypeCoord(
+            div.children.item(0).children.item(0).children.item(2).children.item(0),
+            lon,
+            lat
+        )
+    }
+    else if (typeof text !== 'undefined'){
+        setTypeName(
+            div.children.item(0).children.item(0).children.item(2).children.item(0),
+            text
+        )
+    }
+    if (typeof desc !== 'undefined'){
+
     }
 
     ind++
@@ -65,7 +78,7 @@ function remove(parentNode){
     form.removeChild(parentNode)
 }
 
-function setTypeCoord(parentNode) {
+function setTypeCoord(parentNode, lon, lat) {
     for (let i = 0; i < parentNode.children.length; i++) {
         if (parentNode.children[i].id === 'inputs')
             parentNode.removeChild(parentNode.children[i])
@@ -77,16 +90,22 @@ function setTypeCoord(parentNode) {
             parentNode.children[i].classList.remove('active')
     }
     const div = document.createElement("div")
+
+    if (typeof lat === 'undefined')
+        lat = ''
+    if (typeof lon === 'undefined')
+        lon = ''
+
     div.id = "inputs"
     div.innerHTML = "<div class='cooridnates row mx-3 my-3' style='--bs-gutter-x: 0'>\n" +
-        "               <input class='col me-2' type='text' placeholder='Широта' name='"+parentNode.parentNode.id+"_coord_lat'>\n" +
-        "               <input class='col ' type='text' placeholder='Долгота' name='"+parentNode.parentNode.id+"_coord_lon'>\n" +
+        "               <input value='"+lat+"' class='col me-2' type='text' placeholder='Широта' name='"+parentNode.parentNode.id+"_coord_lat'>\n" +
+        "               <input value='"+lon+"' class='col ' type='text' placeholder='Долгота' name='"+parentNode.parentNode.id+"_coord_lon'>\n" +
         "           </div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
     parentNode.appendChild(div)
 }
 
-function setTypeName(parentNode) {
+function setTypeName(parentNode, text) {
     for (let i = 0; i < parentNode.children.length; i++) {
         if (parentNode.children[i].id === 'inputs')
             parentNode.removeChild(parentNode.children[i])
@@ -102,7 +121,10 @@ function setTypeName(parentNode) {
     const div = document.createElement("div")
     div.id = "inputs"
 
-    div.innerHTML = "<div><input type='text' class='my-3 mx-3' placeholder='Введите адрес' name='"+parentNode.parentNode.id+"_adress'></div>" +
+    if (typeof text === 'undefined')
+        text = ''
+
+    div.innerHTML = "<div><input value='"+text+"' type='text' class='my-3 mx-3' placeholder='Введите адрес' name='"+parentNode.parentNode.id+"_adress'></div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
     parentNode.appendChild(div)
 }
