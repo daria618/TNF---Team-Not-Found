@@ -13,12 +13,6 @@
     object-fit: cover;
     object-position: 0 0;
 }
-/*.box{*/
-/*    width: 40px;*/
-/*    height: 40px;*/
-/*    background-color: #171A1A;*/
-/*    margin: 0 10px 10px 0;*/
-/*}*/
 .card{
     width: 48%;
     border-radius: 5px;

@@ -18,12 +18,11 @@
   <link rel="stylesheet" type="text/css" href="../static/style/common.css" th:href="@{../static/style/common.css}">
   <link rel="stylesheet" type="text/css" href="../static/style/header_common.css" th:href="@{../static/style/header_common.css}">
   <link rel="stylesheet" type="text/css" href="../static/style/rout_card.css" th:href="@{../static/style/rout_card.css}">
-  <link media="print" rel="stylesheet" href="../static/style/print.css">
 
 </head>
 <body>
 <div id="up"></div>
-<header  class="container-fluid shadow p-3 bg-body">
+<header class="container-fluid shadow p-3 bg-body">
   <div class="container">
     <nav class="navbar custom-navbar flex-column flex-sm-row">
       <a class="flex-fill text-center nav-link" href="/home">Главная</a>
@@ -49,8 +48,8 @@
   <div class="photo d-flex mb-3 border p-1">
     <figure class="main_photo col-5">
       <a>
-        <img th:if="${route.getImageName() == null}" src="../static/img/temp_main_photo.jpg" alt="ALT">
-        <img th:if="${route.getImageName() != null}" src="../static/img/temp_main_photo.jpg" th:src="'/img/' + ${route.getImageName()}" alt="ALT">
+        <img th:if="${route.getImageName() == null}" src="../static/img/fon.jpg">
+        <img th:if="${route.getImageName() != null}" th:src="'/img/' + ${route.getImageName()}">
       </a>
     </figure>
     <div th:if="${route.getAddImages() == null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
@@ -131,8 +130,10 @@
   </div>
 
   <div class="reviews mb-4">
-    <h5 class="my-2 mx-4" >Отзывы</h5>
-
+    <div class="d-flex">
+      <h5 class="my-2 mx-4 py-2 px-5">Отзывы</h5>
+      <a class="my-2 mx-4 py-2 px-4 edit">Редактировать маршрут</a>
+    </div>
 <!--    ПЕРЕДЕЛАТЬ-->
     <div class="review border mb-2">
       <div class="d-flex profil mt-4 ms-4">

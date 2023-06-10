@@ -48,7 +48,7 @@
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
                     aria-label="Slide 3"></button>
         </div>
-        <div class="carousel-inner">
+        <div class="carousel-inner" style="border-radius: 5px">
             <div class="carousel-item active">
                 <div class="img_wrap">
                     <img src="../static/img/fon.jpg" class="d-block w-100" alt="...">
@@ -157,10 +157,9 @@
     <div class="row row-cols-2 row-cols-sm-1 justify-content-between" style="--bs-gutter-x:0;">
         <div class="card col my-3" th:each="item : ${routes}">
             <div class="card_img m-3">
-                <img th:if="${item.getImageName() == null}" src="../static/img/fon.jpg"
-                     class="card-img-top" alt="Фото">
-                <img th:if="${item.getImageName() != null}" th:src="'/img/' + ${item.getImageName()}" src="../static/img/fon.jpg"
-                     class="card-img-top" alt="Фото">
+                <img th:if="${item.getImageName() == null}" src="../static/img/fon.jpg" class="card-img-top">
+                <img th:if="${item.getImageName() != null}" th:src="'/img/' + ${item.getImageName()}"
+                     class="card-img-top">
             </div>
             <div class="card-body">
                 <div class="d-flex mb-2">

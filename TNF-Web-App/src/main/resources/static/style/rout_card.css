@@ -84,12 +84,19 @@ figure{
     font-size: calc(0.575rem + 0.65vw);
     color: #FFFFFF;
     font-weight: 300;
-    width: fit-content;
-    padding: 0.5% 5%;
 }
 .review{
     border-radius: 5px;
 }
+
+.edit{
+    background-color: #cc0000;
+    color: #FFFFFF;
+    text-decoration-line: none;
+    border-radius: 5px;
+}
+.edit:hover{ background-color: #ad0404; color: #FFFFFF;cursor: pointer;}
+
 .p {
     font-weight: 900;
     color: black;
