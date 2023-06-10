@@ -42,6 +42,18 @@ h5{
     color: #333333;
     font-size: calc(0.375rem + 0.6vw);
 }
+button[type=submit]{
+    color: #FFFFFF;
+    border: none;
+    background-color: #0A9E07;
+    border-radius: 5px;
+}
+button[type=submit]:hover{
+    background-color: #0A7C07;
+}
+.search form{
+    width: 100%;
+}
 @media (min-width: 768px) {
     .row-cols-md-1 > * {
         flex: 0 0 auto;
