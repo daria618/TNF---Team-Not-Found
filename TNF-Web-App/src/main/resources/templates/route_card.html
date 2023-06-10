@@ -81,21 +81,21 @@
     </p>
   </div>
   <div class="routes row my-4" style="--bs-gutter-x: 0">
-    <div class="col-4 points">
+    <div class="col-4">
       <h4 class="ms-2">Список мест</h4>
       <hr class="ms-2 mt-0" style="width: 36%;">
-
-      <div th:each="item : ${route.getPoints()}">
-        <div class="point d-flex ">
-          <div class="circle m-2"></div>
-          <div>
-            <p class="m-0 align-self-center" th:text="${item.getStr()}" >Точка</p>
-            <p class="mb-1 coord fw-light">Координаты</p>
-            <p>Описание</p>
+      <div class="points" style="height: 400px">
+        <div th:each="item : ${route.getPoints()}">
+          <div class="point d-flex ">
+            <div class="circle m-2"></div>
+            <div>
+              <p class="m-0 align-self-center" th:text="${item.getStr()}" >Точка</p>
+              <p class="mb-1 coord fw-light">Координаты</p>
+              <p>Описание</p>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
     <div class="col-8 map" id="map" style="background-color: #666666; border-radius: 5px;"></div>
     <script type="text/javascript" th:inline="javascript">
