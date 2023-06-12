@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import tnf.back.db.entityes.*;
 import tnf.back.db.repo.CommentRepository;
 import tnf.back.db.repo.FavoritesRepository;
+import tnf.back.db.repo.RatingRepository;
 import tnf.back.db.repo.RouteRepository;
-import tnf.back.logic.Checker;
 import tnf.back.logic.Transform;
 
 import java.util.ArrayList;
@@ -22,15 +22,18 @@ public class RouteCardController {
     private final RouteRepository routeRepository;
     private final CommentRepository commentRepository;
     private final FavoritesRepository favoritesRepository;
+    private final RatingRepository ratingRepository;
 
     public RouteCardController(
             RouteRepository routeRepository,
             CommentRepository commentRepository,
-            FavoritesRepository favoritesRepository
+            FavoritesRepository favoritesRepository,
+            RatingRepository ratingRepository
     ) {
         this.routeRepository = routeRepository;
         this.commentRepository = commentRepository;
         this.favoritesRepository = favoritesRepository;
+        this.ratingRepository = ratingRepository;
     }
 
     @GetMapping("/routes/{route_id}")
@@ -52,6 +55,21 @@ public class RouteCardController {
         model.addAttribute("texts", texts);
 
         model.addAttribute("favorite", isFavorite(user, route));
+
+        RatingMark currentRatingMark = ratingRepository.findByUserAndRoute(user, route);
+        double midRating = 0;
+        int count = 0;
+
+        for (var r : ratingRepository.findByRoute(route)){
+            midRating += r.getValue();
+            count += 1;
+        }
+
+        if (count > 0) midRating /= count;
+        midRating = Math.round(midRating * 10.0) / 10.0;
+
+        model.addAttribute("midRating", midRating);
+        model.addAttribute("currentRatingMark", currentRatingMark);
 
         return "route_card";
     }
@@ -76,8 +94,21 @@ public class RouteCardController {
         var route = routeRepository.findById(id).get();
         Comment comment = new Comment(comment_text, 0L, user, route);
         commentRepository.saveAndFlush(comment);
+
         return "redirect:/routes/" + id;
     }
 
-
+    @GetMapping("/rating/{route_id}/{value}")
+    public String applyRating(
+            @AuthenticationPrincipal User user,
+            @PathVariable("route_id") Long route_id,
+            @PathVariable("value") Integer value
+    ){
+        var route = routeRepository.findById(route_id).get();
+        var mark = ratingRepository.findByUserAndRoute(user, route);
+        if (mark == null) mark = new RatingMark(user, route, value + 0d);
+        else mark.setValue(value + 0d);
+        ratingRepository.saveAndFlush(mark);
+        return "redirect:/routes/" + route_id;
+    }
 }

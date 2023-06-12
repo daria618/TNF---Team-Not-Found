@@ -60,6 +60,9 @@ figure{
     font-weight: 900;
     text-decoration-line: underline;
 }
+.rating{
+    font-weight: 900;
+}
 .info{
     height: fit-content;
     border-radius: 5px;

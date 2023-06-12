@@ -3,7 +3,6 @@ package tnf.back.db.entityes;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 import java.util.Set;
@@ -24,7 +23,6 @@ public class Route {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User author;
-    private double rating;
     @Column(name = "image_name")
     private String imageName;
 
@@ -49,7 +47,6 @@ public class Route {
             String shortDescription,
             String description,
             User author,
-            double rating,
             String imageName,
             Set<String> addImages,
             List<MapPoint> points,
@@ -59,7 +56,6 @@ public class Route {
         this.shortDescription = shortDescription;
         this.description = description;
         this.author = author;
-        this.rating = rating;
         this.imageName = imageName;
         this.addImages = addImages;
         this.points = points;

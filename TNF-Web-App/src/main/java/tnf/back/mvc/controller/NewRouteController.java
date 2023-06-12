@@ -44,25 +44,28 @@ public class NewRouteController {
             @AuthenticationPrincipal User user,
             @RequestParam Map<String, Object> formData,
             @RequestParam("img_main") MultipartFile imageFile,
-            @RequestParam("img_other") MultipartFile[] otherImgFile,
-            Model model
+            @RequestParam("img_other") MultipartFile[] otherImgFile
     ) throws IOException {
         Route route = new Route();
         route.setAuthor(user);
-        route.setRating(0);
         route.setCategories(null);
 
-        String path = UUID.randomUUID() + imageFile.getOriginalFilename();
-        Files.write(Paths.get(uploadPath + "/" + path), imageFile.getBytes());
+        if (!imageFile.isEmpty()){
+            String path = UUID.randomUUID() + imageFile.getOriginalFilename();
+            Files.write(Paths.get(uploadPath + "/" + path), imageFile.getBytes());
+            route.setImageName(path);
+        }
+        else route.setImageName(null);
 
         HashSet<String> strings = new HashSet<>();
-        for (var i = 0; i < otherImgFile.length; i++){
-            String pathOther = UUID.randomUUID() + otherImgFile[i].getOriginalFilename();
-            strings.add(pathOther);
-            Files.write(Paths.get(uploadPath + "/" + pathOther), otherImgFile[i].getBytes());
+        for (MultipartFile multipartFile : otherImgFile) {
+            if (!multipartFile.isEmpty()) {
+                String pathOther = UUID.randomUUID() + multipartFile.getOriginalFilename();
+                strings.add(pathOther);
+                Files.write(Paths.get(uploadPath + "/" + pathOther), multipartFile.getBytes());
+            }
         }
-        route.setImageName(path);
-        route.setAddImages(strings);
+        route.setAddImages(strings.size() > 0 ? strings : null);
 
         ArrayList<String> keys = new ArrayList<>(formData.keySet());
         for (String key : keys) {

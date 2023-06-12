@@ -4,10 +4,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import tnf.back.db.entityes.*;
 import tnf.back.db.repo.CommentRepository;
+import tnf.back.db.repo.RatingRepository;
 import tnf.back.db.repo.RouteRepository;
 import tnf.back.db.repo.UserRepository;
 
-import java.awt.*;
 import java.util.*;
 
 @Component
@@ -16,11 +16,25 @@ public class DBInit implements CommandLineRunner {
     private final UserRepository userRepository;
     private final RouteRepository routeRepository;
     private final CommentRepository commentRepository;
+    private final RatingRepository ratingRepository;
 
-    public DBInit(UserRepository userRepository, RouteRepository routeRepository, CommentRepository commentRepository) {
+    private String[] comments = new String[]{
+            "Лучший маршрут!",
+            "Было интересно)",
+            "Интересно и красиво.",
+            "Выглядит неплохо, не забыть бы."
+    };
+
+    public DBInit(
+            UserRepository userRepository,
+            RouteRepository routeRepository,
+            CommentRepository commentRepository,
+            RatingRepository ratingRepository
+    ) {
         this.userRepository = userRepository;
         this.routeRepository = routeRepository;
         this.commentRepository = commentRepository;
+        this.ratingRepository = ratingRepository;
     }
 
     @Override
@@ -46,13 +60,31 @@ public class DBInit implements CommandLineRunner {
         }
 
         ArrayList<Route> routes = new ArrayList<>();
-        routes.add(route_0(users.get(4)));
+        routes.add(route_0(users.get(4), users));
 
         userRepository.saveAll(users);
         routeRepository.saveAll(routes);
+
+        ArrayList<RatingMark> marks = new ArrayList<>();
+        for (var route : routes){
+            for (var user : users){
+                if (!route.getAuthor().equals(user))
+                    marks.add(randRating(user, route));
+            }
+        }
+        ratingRepository.saveAll(marks);
+
+        ArrayList<Comment> randComments = new ArrayList<>();
+        for (var route : routes){
+            for (var user : users){
+                if (!route.getAuthor().equals(user))
+                    randComments.add(randComment(user, route));
+            }
+        }
+        commentRepository.saveAll(randComments);
     }
 
-    private Route route_0(User user) {
+    private Route route_0(User user, ArrayList<User> users) {
         HashSet<RouteCategory> categories = new HashSet<>();
         categories.add(RouteCategory.HISTORY);
         categories.add(RouteCategory.ROMANTIC);
@@ -74,7 +106,6 @@ public class DBInit implements CommandLineRunner {
                 "Самый большой и очень старый парк в центре Екатеринбурга.",
                 "В позапрошлом веке указом императора Александра I вся эта территория была отдана Ново-Тихвинскому женскому монастырю. В советские времена здесь размещалась станция юных натуралистов.",
                 user,
-                0,
                 "r1_m.jpg",
                 images,
                 points,
@@ -82,14 +113,11 @@ public class DBInit implements CommandLineRunner {
         );
     }
 
-    private String randString(int length) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            var a = random.nextDouble();
-            if (a < 0.1) builder.append(" ");
-            else if (a < 0.6) builder.append((char) ('a' + random.nextInt(26)));
-            else builder.append((char) ('A' + random.nextInt(26)));
-        }
-        return builder.toString();
+    private Comment randComment(User user, Route route) {
+        return new Comment(comments[random.nextInt(comments.length)], 0L, user, route);
+    }
+
+    private RatingMark randRating(User user, Route route){
+        return new RatingMark(user, route, random.nextInt(5) + 1d);
     }
 }
