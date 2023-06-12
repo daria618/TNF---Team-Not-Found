@@ -63,11 +63,11 @@ public class DBInit implements CommandLineRunner {
             add("r1_a3.jpg");
         }};
         ArrayList<MapPoint> points = new ArrayList<>(){{
-            add(new MapPoint("56.827532", "60.602487", "undef", "Выйти на станции метро 'Геологическая'"));
-            add(new MapPoint("56.818387", "60.606228", "undef", "Дойти до входа в парк"));
-            add(new MapPoint("56.817654", "60.597064", "undef", "Пройти по аллее Дворца Спорта"));
-            add(new MapPoint("56.818905", "60.593892", "undef", "Сойти с аллеи и войти в парк"));
-            add(new MapPoint("56.823571", "60.595671", "undef", "Пройти по парку"));
+            add(new MapPoint("56.827532", "60.602487", null, "Выйти на станции метро 'Геологическая'"));
+            add(new MapPoint("56.818387", "60.606228", null, "Дойти до входа в парк"));
+            add(new MapPoint("56.817654", "60.597064", null, "Пройти по аллее Дворца Спорта"));
+            add(new MapPoint("56.818905", "60.593892", null, "Сойти с аллеи и войти в парк"));
+            add(new MapPoint("56.823571", "60.595671", null, "Пройти по парку"));
         }};
         return new Route(
                 "Зеленая роща",

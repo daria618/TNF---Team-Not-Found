@@ -54,11 +54,16 @@
             <div  class="col-6 pe-5">
                 <div id="route_configurator">
                     <div>
-                        <input th:value="${route.getName()}" class="mb-3" type="text" placeholder="Название маршрута..." name="route_name" id="name"/>
+                        <input th:if="${route} != null" th:value="${route.getName()}" class="mb-3" type="text" placeholder="Название маршрута..." name="route_name" id="name"/>
+                        <input th:if="${route} == null" class="mb-3" type="text" placeholder="Название маршрута..." name="route_name" id="name"/>
                         <textarea class="p-4 mb-3" name="desc_short" placeholder="Кратко опишите свой маршрут..."
-                                  style="height: 100px;" th:text="${route.getShortDescription()}"></textarea>
+                                  style="height: 100px;" th:if="${route} != null" th:text="${route.getShortDescription()}"></textarea>
+                        <textarea class="p-4 mb-3" name="desc_short" placeholder="Кратко опишите свой маршрут..."
+                                  style="height: 100px;" th:if="${route} == null"></textarea>
                         <textarea class="p-4 mb-3" name="desc_long" placeholder="Опишите свой маршрут подробнее..."
-                                  style="min-height: 160px;" th:text="${route.getDescription()}"></textarea>
+                                  style="min-height: 160px;" th:if="${route} != null" th:text="${route.getDescription()}"></textarea>
+                        <textarea class="p-4 mb-3" name="desc_long" placeholder="Опишите свой маршрут подробнее..."
+                                  style="min-height: 160px;" th:if="${route} == null"></textarea>
                         <div class="dropdown mb-5">
                             <div class="dropdown">
                                 <button class="py-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -125,17 +130,18 @@
     </form>
 
 </main>
-
-<script th:each="point : ${route.getPoints()}">
-    function parsePoint(){
-        let lat = '[[${point.getLatitude()}]]' === 'undef' ? undefined : '[[${point.getLatitude()}]]'
-        let lon = '[[${point.getLongitude()}]]' === 'undef' ? undefined : '[[${point.getLongitude()}]]'
-        let text = '[[${point.getTextRepresent()}]]' === 'undef' ? undefined : '[[${point.getTextRepresent()}]]'
-        let desc = '[[${point.getDescription()}]]' === 'undef' ? undefined : '[[${point.getDescription()}]]'
-        addNewPoint(lat, lon, text, desc)
-    }
-    parsePoint()
-</script>
+<div th:if="${route}">
+    <script th:each="point : ${route.getPoints()}">
+        function parsePoint(){
+            let lat = '[[${point.getLatitude()}]]'.length === 0 ? undefined : '[[${point.getLatitude()}]]'
+            let lon = '[[${point.getLongitude()}]]'.length === 0 ? undefined : '[[${point.getLongitude()}]]'
+            let text = '[[${point.getTextRepresent()}]]'.length === 0 ? undefined : '[[${point.getTextRepresent()}]]'
+            let desc = '[[${point.getDescription()}]]'.length === 0 ? undefined : '[[${point.getDescription()}]]'
+            addNewPoint(lat, lon, text, desc)
+        }
+        parsePoint()
+    </script>
+</div>
 
 <footer class="container-fluid p-0" style="background-color: #171A1A;">
     <div id="footer" class="container overflow-hidden" style="padding-top: 2%">

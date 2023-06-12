@@ -94,10 +94,13 @@ function setTypeCoord(parentNode, lon, lat) {
     }
     const div = document.createElement("div")
 
-    if (typeof lat === 'undefined')
+    if (typeof lat === 'undefined' && typeof lon === 'undefined'){
         lat = ''
-    if (typeof lon === 'undefined')
         lon = ''
+    }
+    else {
+        points.push([parseFloat(lat), parseFloat(lon)])
+    }
 
     div.id = "inputs"
     div.innerHTML = "<div class='cooridnates row mx-3 my-3' style='--bs-gutter-x: 0'>\n" +
@@ -124,8 +127,12 @@ function setTypeName(parentNode, text) {
     const div = document.createElement("div")
     div.id = "inputs"
 
-    if (typeof text === 'undefined')
+    if (typeof text === 'undefined'){
         text = ''
+    }
+    else {
+        points.push(text)
+    }
 
     div.innerHTML = "<div><input value='"+text+"' type='text' class='my-3 mx-3' placeholder='Введите адрес' name='"+parentNode.parentNode.id+"_adress'></div>" +
         "<div class='d-flex justify-content-center'><input onclick='submitPoint(this.parentNode.parentNode)' type='button' value='Подтвердить' style='width: 50%'></div>"
@@ -182,14 +189,21 @@ function createMap(){
             center: [56.8519, 60.6122],
             zoom: 11,
         });
+        updateMap()
     });
 }
 function updateMap(){
-    points.forEach(item => console.log(item));
     if (points.length > 1){
-        ymaps.route(points).then(function (route) {
-            myMap.geoObjects.add(route);
+        points.forEach(item => console.log(item));
+        var multiRoute = new ymaps.multiRouter.MultiRoute({
+            referencePoints: points,
+            params: {
+                routingMode: "pedestrian"
+            }
+        }, {
+            boundsAutoApply: true
         });
+        myMap.geoObjects.add(multiRoute);
     }
 }
 

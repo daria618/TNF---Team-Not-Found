@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tnf.back.db.entityes.Comment;
-import tnf.back.db.entityes.MapPoint;
-import tnf.back.db.entityes.User;
+import tnf.back.db.entityes.*;
 import tnf.back.db.repo.CommentRepository;
+import tnf.back.db.repo.FavoritesRepository;
 import tnf.back.db.repo.RouteRepository;
 import tnf.back.logic.Checker;
 import tnf.back.logic.Transform;
@@ -22,10 +21,16 @@ public class RouteCardController {
 
     private final RouteRepository routeRepository;
     private final CommentRepository commentRepository;
+    private final FavoritesRepository favoritesRepository;
 
-    public RouteCardController(RouteRepository routeRepository, CommentRepository commentRepository) {
+    public RouteCardController(
+            RouteRepository routeRepository,
+            CommentRepository commentRepository,
+            FavoritesRepository favoritesRepository
+    ) {
         this.routeRepository = routeRepository;
         this.commentRepository = commentRepository;
+        this.favoritesRepository = favoritesRepository;
     }
 
     @GetMapping("/routes/{route_id}")
@@ -46,7 +51,19 @@ public class RouteCardController {
         for (var point : route.getPoints()) texts.add(Transform.MapPointToYMAPString(point));
         model.addAttribute("texts", texts);
 
+        model.addAttribute("favorite", isFavorite(user, route));
+
         return "route_card";
+    }
+
+    private Favorites isFavorite(User user, Route route){
+        if (user != null && route != null){
+            var favorites = favoritesRepository.findByUser(user);
+            for (var fav : favorites)
+                if (fav.getRoute().getId() == route.getId())
+                    return fav;
+        }
+        return null;
     }
 
     @PostMapping("/routes/{route_id}")

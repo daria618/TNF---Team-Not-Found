@@ -102,14 +102,18 @@
             <div class="tab-content">
                 <div class="tab-pane active routestab" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="selected-routes">
-                        <div>
+                        <div th:if="${favorites} == null" class="mt-4">
+                            Вы не добавили в избранное ни одного маршрута.
+                        </div>
+                        <div th:if="${favorites} != null" th:each="item : ${favorites}">
                             <div class="d-flex mt-3">
                                 <vr class="vr"></vr>
-                                <h6 class="ms-2"><a href="">Название маршрута*</a></h6>
+                                <h6 class="ms-2"><a th:href="'/routes/'+${item.getId()}" th:text="${item.getName()}">Название маршрута*</a></h6>
                             </div>
                             <div class="card mt-2">
                                 <figure class="img-wrap" >
-                                    <img src="../static/img/temp_main_photo.jpg" class="img-responsive">
+                                    <img th:if="${item.getImageName() != null}" th:src="'/img/' + ${item.getImageName()}" class="img-responsive">
+                                    <img th:if="${item.getImageName() == null}" src="../static/img/temp_main_photo.jpg" class="img-responsive">
                                 </figure>
                             </div>
                         </div>
@@ -117,19 +121,24 @@
                 </div>
                 <div class="tab-pane routestab" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="my-routes">
-                        <div>
+                        <div th:if="${routes} == null" class="mt-4">
+                            Вы не создали ни одного маршрута.
+                        </div>
+                        <div th:if="${routes} != null" th:each="item : ${routes}">
                             <div class="d-flex mt-3">
                                 <vr class="vr"></vr>
-                                <h6 class="ms-2"><a href="">Название маршрута*</a></h6>
+                                <h6 class="ms-2"><a th:href="'/routes/'+${item.getId()}" th:text="${item.getName()}">Название маршрута*</a></h6>
                             </div>
                             <div class="card mt-2">
                                 <figure class="img-wrap" >
-                                    <img src="../static/img/temp_main_photo.jpg" class="img-responsive">
+                                    <img th:if="${item.getImageName() != null}" th:src="'/img/' + ${item.getImageName()}" class="img-responsive">
+                                    <img th:if="${item.getImageName() == null}" src="../static/img/temp_main_photo.jpg" class="img-responsive">
                                 </figure>
                             </div>
+
                             <div class="d-flex flex-row mt-2 mb-4">
-                                <a href="" class="me-4 px-4 py-1 edit">Отредактировать</a>
-                                <a href="" class="me-4 px-4 py-1 delete">Удалить</a>
+                                <a th:href="'/edit/'+${item.getId()}" class="me-4 px-4 py-1 edit">Отредактировать</a>
+                                <a th:href="'/delete/'+${item.getId()}" class="me-4 px-4 py-1 delete">Удалить</a>
                             </div>
                         </div>
                     </div>
