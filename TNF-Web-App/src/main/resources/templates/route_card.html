@@ -51,12 +51,19 @@
     <div class="photo d-flex mb-3 border p-1">
         <figure class="main_photo col-5 mb-0">
             <a>
-                <img th:if="${route.getImageName() == null}" src="../static/img/fon.jpg">
-                <img th:if="${route.getImageName() != null}" th:src="'/img/' + ${route.getImageName()}">
+                <img th:src="${route.getImageName() == null ? '../static/img/starter_bg.png' : '/img/' + route.getImageName()}"
+                     src="../static/img/starter_bg.png"
+                     class="card-img-top">
             </a>
         </figure>
-        <div th:if="${route.getAddImages() == null}" class="other_photo col-7 row row-cols-3"
-             style="--bs-gutter-x: 0"></div>
+        <div th:if="${route.getAddImages() == null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
+            <div><figure class="col minor_photo ms-2"><img src="../static/img/point_on_map.png" alt="point"></figure></div>
+            <div><figure class="col minor_photo ms-2"><img src="../static/img/point_on_map.png" alt="point"></figure></div>
+            <div><figure class="col minor_photo ms-2"><img src="../static/img/point_on_map.png" alt="point"></figure></div>
+            <div><figure class="col minor_photo ms-2"><img src="../static/img/point_on_map.png" alt="point"></figure></div>
+            <div><figure class="col minor_photo ms-2"><img src="../static/img/point_on_map.png" alt="point"></figure></div>
+            <div><figure class="col minor_photo ms-2"><img src="../static/img/point_on_map.png" alt="point"></figure></div>
+        </div>
         <div th:if="${route.getAddImages() != null}" class="other_photo col-7 row row-cols-3" style="--bs-gutter-x: 0">
             <div th:each="item : ${route.getAddImages()}">
                 <figure class="col minor_photo ms-2"><img th:src="'/img/' + ${item}" src="../static/img/fon.jpg">
@@ -72,13 +79,13 @@
                 <div class="d-flex">
                     <img th:if="${logUser.getPhoto() == null}" src="../static/img/person.jpg"
                          class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
-                    <img th:if="${logUser.getPhoto() != null}" th:src="'/img/' + ${logUser.getPhoto()}"
+                    <img th:if="${logUser.getPhoto() != null}" th:src="'/img/' + ${route.getAuthor.getPhoto()}"
                          class="img-fluid rounded-pill" alt="photo" style="align-content: center ">
                     <p class="name align-self-center ms-3 mb-0" th:text="'Автор: '+${route.getAuthor().getUsername()}">
                         Имя пользователя</p>
                 </div>
                 <div class="align-self-center">
-                    <a th:href="'/fav/'+${route.getId()}">
+                    <a th:href="'/fav/'+${route.getId()}" style="text-decoration: none">
                         <img th:if="${favorite == null}" class="me-3" src="../static/img/heart.png" style="width: 32px; height: 32px" alt="Favorite">
                         <img th:if="${favorite != null}" class="me-3" src="../static/img/heart_fill.png" style="width: 32px; height: 32px" alt="Favorite">
                     </a>
@@ -94,11 +101,11 @@
                     <p class="rating align-self-center ms-3 mb-0" th:text="'Рейтинг: '+${midRating}">
                         Рейтинг: 5</p>
                     <div id="stars" class="mx-4">
-                        <a style="width: 32px; height: 32px" th:href="'/rating/'+${route.getId()}+'/1'"> <img class="star" id="star_1" src="../static/img/star.png" style="width: 32px; height: 32px" alt="1"> </a>
-                        <a style="width: 32px; height: 32px" th:href="'/rating/'+${route.getId()}+'/2'"> <img class="star" id="star_2" src="../static/img/star.png" style="width: 32px; height: 32px" alt="2"> </a>
-                        <a style="width: 32px; height: 32px" th:href="'/rating/'+${route.getId()}+'/3'"> <img class="star" id="star_3" src="../static/img/star.png" style="width: 32px; height: 32px" alt="3"> </a>
-                        <a style="width: 32px; height: 32px" th:href="'/rating/'+${route.getId()}+'/4'"> <img class="star" id="star_4" src="../static/img/star.png" style="width: 32px; height: 32px" alt="4"> </a>
-                        <a style="width: 32px; height: 32px" th:href="'/rating/'+${route.getId()}+'/5'"> <img class="star" id="star_5" src="../static/img/star.png" style="width: 32px; height: 32px" alt="5"> </a>
+                        <a style="text-decoration: none" th:href="'/rating/'+${route.getId()}+'/1'"> <img class="star" id="star_1" src="../static/img/star.png" style="width: 32px; height: 32px" alt="1"> </a>
+                        <a style="text-decoration: none" th:href="'/rating/'+${route.getId()}+'/2'"> <img class="star" id="star_2" src="../static/img/star.png" style="width: 32px; height: 32px" alt="2"> </a>
+                        <a style="text-decoration: none" th:href="'/rating/'+${route.getId()}+'/3'"> <img class="star" id="star_3" src="../static/img/star.png" style="width: 32px; height: 32px" alt="3"> </a>
+                        <a style="text-decoration: none" th:href="'/rating/'+${route.getId()}+'/4'"> <img class="star" id="star_4" src="../static/img/star.png" style="width: 32px; height: 32px" alt="4"> </a>
+                        <a style="text-decoration: none" th:href="'/rating/'+${route.getId()}+'/5'"> <img class="star" id="star_5" src="../static/img/star.png" style="width: 32px; height: 32px" alt="5"> </a>
                     </div>
                     <script>
                         let imgs = [
@@ -188,9 +195,11 @@
     <div class="reviews mb-4">
         <div class="d-flex">
             <h5 class="my-2 mx-4 py-2 px-5">Отзывы</h5>
-            <a th:href="'/edit/'+${route.getId()}" class="my-2 py-2 px-4 edit">Редактировать маршрут</a>
+            <div th:if="${logUser.getId() == route.getAuthor().getId()}">
+                <a th:href="'/edit/'+${route.getId()}" class="my-2 py-2 px-4 edit">Редактировать маршрут</a>
+            </div>
         </div>
-        <!--    ПЕРЕДЕЛАТЬ-->
+        <!--    ПЕРЕДЕЛАТЬ Дендрологический парк, Екатеринбург-->
         <div class="review border mb-2">
             <div class="d-flex profil mt-4 ms-4">
                 <img th:if="${logUser.getPhoto() == null}" src="../static/img/person.jpg" class="img-fluid rounded-pill"

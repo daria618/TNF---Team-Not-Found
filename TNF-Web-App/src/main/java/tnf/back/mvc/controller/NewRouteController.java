@@ -46,8 +46,20 @@ public class NewRouteController {
             @RequestParam("img_main") MultipartFile imageFile,
             @RequestParam("img_other") MultipartFile[] otherImgFile
     ) throws IOException {
-        Route route = new Route();
-        route.setAuthor(user);
+        ArrayList<String> keys = new ArrayList<>(formData.keySet());
+
+        Route route;
+        boolean isLoaded = false;
+        if (!keys.contains("routeID"))
+            route = new Route();
+        else{
+            route = repository.findById(Long.parseLong(formData.get("routeID").toString())).get();
+            isLoaded = true;
+        }
+
+        if (!isLoaded)
+            route.setAuthor(user);
+
         route.setCategories(null);
 
         if (!imageFile.isEmpty()){
@@ -55,7 +67,8 @@ public class NewRouteController {
             Files.write(Paths.get(uploadPath + "/" + path), imageFile.getBytes());
             route.setImageName(path);
         }
-        else route.setImageName(null);
+        else if (!isLoaded)
+            route.setImageName(null);
 
         HashSet<String> strings = new HashSet<>();
         for (MultipartFile multipartFile : otherImgFile) {
@@ -65,9 +78,12 @@ public class NewRouteController {
                 Files.write(Paths.get(uploadPath + "/" + pathOther), multipartFile.getBytes());
             }
         }
-        route.setAddImages(strings.size() > 0 ? strings : null);
+        if (isLoaded){
+            if (strings.size() > 0)
+                route.setAddImages(strings);
+        }
+        else route.setAddImages(strings.size() > 0 ? strings : null);
 
-        ArrayList<String> keys = new ArrayList<>(formData.keySet());
         for (String key : keys) {
             switch (key) {
                 case "route_name" -> route.setName(formData.get(key).toString());
@@ -101,15 +117,12 @@ public class NewRouteController {
             }
         }
 
-        route.setPoints(points);
+        if (!isLoaded)
+            route.setPoints(points);
 
-        System.out.println(route.getName());
-        System.out.println(route.getShortDescription());
-        System.out.println(route.getDescription());
-        for (var e : route.getPoints())
-            System.out.println(e.getStr());
+        System.out.println(route);
 
-        repository.saveAndFlush(route);
+        repository.save(route);
 
         return "redirect:/routes";
     }

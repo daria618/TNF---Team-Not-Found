@@ -50,6 +50,9 @@
     </script>
 
     <form enctype="multipart/form-data" name="fullForm" action="/editor/create/fin" th:action="@{/editor/create/fin}" method="post">
+        <div th:if="${isLoaded}">
+            <input type="hidden" name="routeID" th:value="${route.getId()}">
+        </div>
         <div class="row" style="--bs-gutter-x: 0;">
             <div  class="col-6 pe-5">
                 <div id="route_configurator">

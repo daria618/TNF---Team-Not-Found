@@ -18,6 +18,7 @@ public class MapPoint {
     private String longitude;
     @Column(name = "text_represent")
     private String textRepresent;
+    @Column(length = 1024)
     private String description;
 
     public MapPoint() {

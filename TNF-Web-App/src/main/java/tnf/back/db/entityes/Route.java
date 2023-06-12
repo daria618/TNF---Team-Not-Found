@@ -18,7 +18,9 @@ public class Route {
 
     @Column(name = "routename", nullable = false)
     private String name;
+    @Column(length = 1024)
     private String shortDescription;
+    @Column(length = 8192)
     private String description;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
@@ -60,5 +62,30 @@ public class Route {
         this.addImages = addImages;
         this.points = points;
         this.categories = categories;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("id: ").append(id).append("\n");
+        builder.append("name: ").append(name).append("\n");
+        builder.append("shortDescription: ").append(shortDescription).append("\n");
+        builder.append("description: ").append(description).append("\n");
+
+        builder.append("author: ").append(author.toString()).append("\n");
+        builder.append("imageName: ").append(imageName).append("\n");
+        if (categories != null) builder.append("categories: ").append(categories).append("\n");
+        builder.append("addImages: ").append(addImages).append("\n");
+
+        builder.append("POINTS:\n");
+        for (var point : points){
+            builder.append("\t");
+            builder.append(point.getLatitude()).append(" | ");
+            builder.append(point.getLongitude()).append(" | ");
+            builder.append(point.getTextRepresent()).append(" | ");
+            builder.append(point.getDescription()).append("\n");
+        }
+
+        return builder.toString();
     }
 }

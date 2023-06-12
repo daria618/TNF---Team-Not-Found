@@ -41,39 +41,25 @@
     <!--    Карусель-->
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
+            <button th:each="item, iterStat : ${topRated}"
+                    type="button"
+                    data-bs-target="#carouselExampleCaptions"
+                    th:data-bs-slide-to="${iterStat.index}"
+                    th:class="${iterStat.index == 0 ? 'active' : ''}"
+                    th:aria-current="${iterStat.index == 0 ? 'true' : ''}"
+                    th:aria-label="${'Slide '+iterStat.index + 1}"
+            ></button>
         </div>
         <div class="carousel-inner" style="border-radius: 5px">
-            <div class="carousel-item active">
+
+            <div th:each="item, iterStat : ${topRated}"
+                 th:class="${iterStat.index == 0 ? 'carousel-item active' : 'carousel-item'}">
                 <div class="img_wrap">
-                    <img src="../static/img/fon.jpg" class="d-block w-100" alt="...">
+                    <img th:src="${item.getImageName() == null ? '../static/img/starter_bg.png' : '/img/' + item.getImageName()}" src="../static/img/fon.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Метка первого слайда</h5>
-                    <p>Некоторый репрезентативный заполнитель для первого слайда.</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="img_wrap">
-                    <img src="../static/img/fon.jpg" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Метка второго слайда</h5>
-                    <p>Некоторый репрезентативный заполнитель для второго слайда.</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="img_wrap">
-                    <img src="../static/img/fon.jpg" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Метка третьего слайда</h5>
-                    <p>Некоторый репрезентативный заполнитель для третьего слайда.</p>
+                    <h5 th:text="${item.getName()}">Метка первого слайда</h5>
+                    <p th:text="${item.getShortDescription()}">Некоторый репрезентативный заполнитель для первого слайда.</p>
                 </div>
             </div>
         </div>
@@ -88,9 +74,6 @@
             <span class="visually-hidden">Следующий</span>
         </button>
     </div>
-    <!--    <div class="position-fixed bottom-0 end-0">-->
-    <!--      <div class="box">Close</div>-->
-    <!--    </div>-->
 
     <div class="search container-fluid d-flex justify-content-end my-4 p-0">
         <form class="d-flex justify-content-end">
@@ -165,9 +148,7 @@
     <div class="row row-cols-2 row-cols-sm-1 justify-content-between" style="--bs-gutter-x:0;">
         <div class="card col my-3" th:each="item : ${routes}">
             <div class="card_img m-3">
-                <img th:if="${item.getImageName() == null}" src="../static/img/fon.jpg" class="card-img-top">
-                <img th:if="${item.getImageName() != null}" th:src="'/img/' + ${item.getImageName()}"
-                     class="card-img-top">
+                <img th:src="${item.getImageName() == null ? '../static/img/starter_bg.png' : '/img/' + item.getImageName()}" src="../static/img/starter_bg.png" class="card-img-top">
             </div>
             <div class="card-body">
                 <div class="d-flex mb-2">
